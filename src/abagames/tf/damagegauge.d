@@ -5,7 +5,7 @@
  */
 module abagames.tf.damagegauge;
 
-private import opengl;
+private import derelict.opengl3.gl;
 private import abagames.tf.enemy;
 private import abagames.tf.tumiki;
 private import abagames.tf.tumikiset;
@@ -19,7 +19,7 @@ public class DamageGauge {
   DamageGaugeItem[3] item;
 
   public this() {
-    foreach (inout DamageGaugeItem dgi; item)
+    foreach (ref DamageGaugeItem dgi; item)
       dgi = new DamageGaugeItem;
   }
 

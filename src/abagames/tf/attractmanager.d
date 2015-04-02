@@ -5,8 +5,9 @@
  */
 module abagames.tf.attractmanager;
 
+private import std.conv;
 private import std.string;
-private import opengl;
+private import derelict.opengl3.gl;
 private import abagames.util.sdl.pad;
 private import abagames.tf.gamemanager;
 private import abagames.tf.prefmanager;
@@ -65,7 +66,7 @@ public class AttractManager {
       if (dr > PrefManager.RANKING_NUM)
         dr = PrefManager.RANKING_NUM;
       for (int i = 0; i < dr; i++) {
-        char[] rs = std.string.toString(i + 1);
+        string rs = to!string(i + 1);
         float x = 100;
         float y = i * 30 + 32;
         switch (i) {
@@ -91,7 +92,7 @@ public class AttractManager {
         if (prefManager.ranking[i].stage >= StageManager.STAGE_NUM)
           rs = "A";
         else
-          rs = std.string.toString(prefManager.ranking[i].stage + 1);
+          rs = to!string(prefManager.ranking[i].stage + 1);
         LetterRender.drawString
           (rs, 500, y, 9, LetterRender.Direction.TO_RIGHT, 3);
       }
@@ -123,7 +124,7 @@ public class AttractManager {
     glScalef(s, s, s);
     int tx, ty;
     ty = 0;
-    foreach (int[] tpl; TITLE_PTN) {
+    foreach (const(int[]) tpl; TITLE_PTN) {
       tx = 0;
       foreach (int tp; tpl) {
         int c = TITLE_CLR[ty][tx];

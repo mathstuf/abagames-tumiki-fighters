@@ -14,13 +14,13 @@ private import abagames.util.prefmanager;
 public class PrefManager: abagames.util.prefmanager.PrefManager {
  public:
   static const int VERSION_NUM = 20;
-  static const char[] PREF_FILE = "tf.prf";
+  static const string PREF_FILE = "tf.prf";
   static const int RANKING_NUM = 10;
   static const int DEFAULT_HISCORE = 10000;
   RankingItem[RANKING_NUM] ranking;
 
   public this() {
-    foreach (inout RankingItem ri; ranking)
+    foreach (ref RankingItem ri; ranking)
       ri = new RankingItem;
   }
 
@@ -34,7 +34,7 @@ public class PrefManager: abagames.util.prefmanager.PrefManager {
   }
 
   public void load() {
-    auto File fd = new File;
+    scope File fd = new File;
     try {
       int ver;
       fd.open(PREF_FILE);
@@ -43,7 +43,7 @@ public class PrefManager: abagames.util.prefmanager.PrefManager {
         throw new Error("Wrong version num");
       foreach (RankingItem ri; ranking)
         ri.load(fd);
-    } catch (Error e) {
+    } catch (Exception e) {
       init();
     } finally {
       fd.close();
@@ -51,7 +51,7 @@ public class PrefManager: abagames.util.prefmanager.PrefManager {
   }
 
   public void save() {
-    auto File fd = new File;
+    scope File fd = new File;
     fd.create(PREF_FILE);
     fd.write(VERSION_NUM);
     foreach (RankingItem ri; ranking)

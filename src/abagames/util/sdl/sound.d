@@ -5,9 +5,10 @@
  */
 module abagames.util.sdl.sound;
 
+private import std.conv;
 private import std.string;
-private import SDL;
-private import SDL_mixer;
+private import derelict.sdl2.sdl;
+private import derelict.sdl2.mixer;
 private import abagames.util.sdl.sdlexception;
 
 /**
@@ -21,6 +22,7 @@ public abstract class Sound {
   public static void init() {
     if (noSound)
       return;
+    DerelictSDL2Mixer.load();
     int audio_rate;
     Uint16 audio_format;
     int audio_channels;
@@ -28,7 +30,7 @@ public abstract class Sound {
     if (SDL_InitSubSystem(SDL_INIT_AUDIO) < 0) {
       noSound = 1;
       throw new SDLInitFailedException
-        ("Unable to initialize SDL_AUDIO: " ~ std.string.toString(SDL_GetError()));
+        ("Unable to initialize SDL_AUDIO: " ~ to!string(SDL_GetError()));
     }
     audio_rate = 44100;
     audio_format = AUDIO_S16;
@@ -37,7 +39,7 @@ public abstract class Sound {
     if (Mix_OpenAudio(audio_rate, audio_format, audio_channels, audio_buffers) < 0) {
       noSound = 1;
       throw new SDLInitFailedException
-        ("Couldn't open audio: " ~ std.string.toString(SDL_GetError()));
+        ("Couldn't open audio: " ~ to!string(SDL_GetError()));
     }
     Mix_QuerySpec(&audio_rate, &audio_format, &audio_channels);
   }
@@ -51,8 +53,8 @@ public abstract class Sound {
     Mix_CloseAudio();
   }
 
-  public abstract void load(char[] name);
-  public abstract void load(char[] name, int ch);
+  public abstract void load(string name);
+  public abstract void load(string name, int ch);
   public abstract void free();
   public abstract void play();
   public abstract void fade();
@@ -62,23 +64,23 @@ public abstract class Sound {
 public class Music: Sound {
  public:
   static int fadeOutSpeed = 1280;
-  static char[] dir = "sounds/";
+  static string dir = "sounds/";
  private:
   Mix_Music* music;
 
-  public void load(char[] name) {
+  public void load(string name) {
     if (noSound)
       return;
-    char[] fileName = dir ~ name;
+    string fileName = dir ~ name;
     music = Mix_LoadMUS(std.string.toStringz(fileName));
     if (!music) {
       noSound = true;
       throw new SDLInitFailedException("Couldn't load: " ~ fileName ~
-                                       " (" ~ std.string.toString(Mix_GetError()) ~ ")");
+                                       " (" ~ to!string(Mix_GetError()) ~ ")");
     }
   }
 
-  public void load(char[] name, int ch) {
+  public void load(string name, int ch) {
     load(name);
   }
 
@@ -122,24 +124,24 @@ public class Music: Sound {
 
 public class Chunk: Sound {
  public:
-  static char[] dir = "sounds/";
+  static string dir = "sounds/";
  private:
   Mix_Chunk* chunk;
   int chunkChannel;
 
-  public void load(char[] name) {
+  public void load(string name) {
     load(name, 0);
   }
 
-  public void load(char[] name, int ch) {
+  public void load(string name, int ch) {
     if (noSound)
       return;
-    char[] fileName = dir ~ name;
+    string fileName = dir ~ name;
     chunk = Mix_LoadWAV(std.string.toStringz(fileName));
     if (!chunk) {
       noSound = true;
       throw new SDLInitFailedException("Couldn't load: " ~ fileName ~
-                                       " (" ~ std.string.toString(Mix_GetError()) ~ ")");
+                                       " (" ~ to!string(Mix_GetError()) ~ ")");
     }
     chunkChannel = ch;
   }

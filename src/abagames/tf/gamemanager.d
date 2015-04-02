@@ -5,10 +5,11 @@
  */
 module abagames.tf.gamemanager;
 
+private import std.conv;
 private import std.math;
-private import opengl;
-private import SDL;
-private import bulletml;
+private import derelict.opengl3.gl;
+private import derelict.sdl2.sdl;
+private import bml = bulletml.bulletml;
 private import abagames.util.rand;
 private import abagames.util.actorpool;
 private import abagames.util.vector;
@@ -95,34 +96,37 @@ public class GameManager: abagames.util.sdl.gamemanager.GameManager {
   public void init() {
     BarrageManager.loadBulletMLs();
     pad = cast(Pad) input;
+    try {
+      pad.openJoystick();
+    } catch (Exception e) {}
     prefManager = cast(PrefManager) abstPrefManager;
     screen = cast(Screen) abstScreen;
     interval = mainLoop.INTERVAL_BASE;
     rand = new Rand;
     field = new Field;
     field.init();
-    auto ParticleInitializer pi = new ParticleInitializer;
+    scope ParticleInitializer pi = new ParticleInitializer;
     particles = new ParticlePool(128, pi);
-    auto Fragment fragmentClass = new Fragment;
-    auto FragmentInitializer fi = new FragmentInitializer;
+    scope Fragment fragmentClass = new Fragment;
+    scope FragmentInitializer fi = new FragmentInitializer;
     fragments = new ActorPool(128, fragmentClass, fi);
     ship = new Ship;
     ship.init(pad, field, particles, fragments, this);
-    auto SplinterInitializer si = new SplinterInitializer(ship, field, particles, this);
+    scope SplinterInitializer si = new SplinterInitializer(ship, field, particles, this);
     splinters = new SplinterPool(144, si);
-    auto BulletActorInitializer bi = new BulletActorInitializer(field, ship, particles, splinters);
+    scope BulletActorInitializer bi = new BulletActorInitializer(field, ship, particles, splinters);
     bullets = new BulletActorPool(512, bi);
     ship.setBulletActorPool(bullets);
     ship.initStuckEnemies(splinters);
     gauge = new DamageGauge;
-    auto EnemyInitializer ei = new EnemyInitializer
+    scope EnemyInitializer ei = new EnemyInitializer
       (this, field, bullets, ship, splinters, particles, fragments, gauge);
     enemies = new EnemyPool(64, ei);
     bullets.setEnemies(enemies);
-    auto ScoreSignInitializer ssi = new ScoreSignInitializer;
-    auto ScoreSign scoreSignClass = new ScoreSign;
+    scope ScoreSignInitializer ssi = new ScoreSignInitializer;
+    scope ScoreSign scoreSignClass = new ScoreSign;
     signs = new ActorPool(32, scoreSignClass, ssi);
-    auto MobileLetterInitializer mli = new MobileLetterInitializer;
+    scope MobileLetterInitializer mli = new MobileLetterInitializer;
     letters = new MobileLetterPool(32, mli, field);
     stageManager = new StageManager(this, enemies, field);
     bullets.setStageManager(stageManager);
@@ -138,7 +142,6 @@ public class GameManager: abagames.util.sdl.gamemanager.GameManager {
   }
 
   public void close() {
-    BarrageManager.unloadBulletMLs();
     SoundManager.close();
     LetterRender.deleteDisplayLists();
     Tumiki.deleteDisplayLists();
@@ -204,7 +207,7 @@ public class GameManager: abagames.util.sdl.gamemanager.GameManager {
     state = State.IN_GAME;
   }
 
-  private const char[][] stageMessage =
+  private const string[] stageMessage =
     [
      "WE ARE TUMIKI FIGHTERS!",
      "JUST OVER THE HORIZON",
@@ -225,7 +228,7 @@ public class GameManager: abagames.util.sdl.gamemanager.GameManager {
     gauge.init();
     bossTimer = BOSSTIMER_FREEZED;
     bossDstCnt = -1;
-    letters.add("STAGE " ~ std.string.toString(stage + 1), 180, 150, 24, 240, -4);
+    letters.add("STAGE " ~ to!string(stage + 1), 180, 150, 24, 240, -4);
     letters.add(stageMessage[stage], 320 - stageMessage[stage].length * 10, 270, 10, 240, -2);
     int si = stage % (SoundManager.STAGE_BGM_NUM * 2 - 1);
     if (si >= SoundManager.STAGE_BGM_NUM)
@@ -481,10 +484,12 @@ public class GameManager: abagames.util.sdl.gamemanager.GameManager {
   // Draw actors in game(called once per frame).
   public void draw() {
     SDL_Event e = mainLoop.event;
-    if (e.type == SDL_VIDEORESIZE) {
-      SDL_ResizeEvent re = e.resize;
-      if (re.w > 150 && re.h > 100)
-        screen.resized(re.w, re.h);
+    if (e.type == SDL_WINDOWEVENT_RESIZED) {
+      SDL_WindowEvent we = e.window;
+      Sint32 w = we.data1;
+      Sint32 h = we.data2;
+      if (w > 150 && h > 100)
+        screen.resized(w, h);
     }
     screen.clear();
     screen.viewOrthoFixed();
@@ -616,7 +621,7 @@ public class GameManager: abagames.util.sdl.gamemanager.GameManager {
         LetterRender.drawString("YES", 483, 402, 8, LetterRender.Direction.TO_RIGHT, 2);
         LetterRender.drawString("NO", 560, 400, 12, LetterRender.Direction.TO_RIGHT, 0);
       }
-      LetterRender.drawString("CREDIT " ~ std.string.toString(credit), 32, 420, 8,
+      LetterRender.drawString("CREDIT " ~ to!string(credit), 32, 420, 8,
                               LetterRender.Direction.TO_RIGHT, 3);
     }
   }

@@ -14,11 +14,11 @@ public class ActorPool {
  public:
   Actor[] actor;
  protected:
-  int actorIdx;
+  size_t actorIdx;
 
   public this(int n, Actor act, ActorInitializer ini) {
     actor = new Actor[n];
-    foreach (inout Actor a; actor) {
+    foreach (ref Actor a; actor) {
       a = act.newActor();
       a.isExist = false;
       a.init(ini);
@@ -27,10 +27,8 @@ public class ActorPool {
   }
 
   public Actor getInstance() {
-    for (int i = 0; i < actor.length; i++) {
-      actorIdx--;
-      if (actorIdx < 0)
-        actorIdx = actor.length - 1;
+    for (size_t i = 0; i < actor.length; i++) {
+      nextActor();
       if (!actor[actorIdx].isExist)
         return actor[actorIdx];
     }
@@ -38,9 +36,7 @@ public class ActorPool {
   }
 
   public Actor getInstanceForced() {
-    actorIdx--;
-    if (actorIdx < 0)
-      actorIdx = actor.length - 1;
+    nextActor();
     return actor[actorIdx];
   }
 
@@ -62,5 +58,12 @@ public class ActorPool {
     foreach (Actor ac; actor) {
       ac.isExist = false;
     }
+  }
+
+  private void nextActor() {
+    if (actorIdx == 0)
+      actorIdx = actor.length - 1;
+    else
+      actorIdx--;
   }
 }

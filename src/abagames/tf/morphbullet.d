@@ -5,7 +5,7 @@
  */
 module abagames.tf.morphbullet;
 
-private import bulletml;
+private import bml = bulletml.bulletml;
 private import abagames.util.bulletml.bullet;
 
 /**
@@ -14,25 +14,29 @@ private import abagames.util.bulletml.bullet;
 public class MorphBullet: Bullet {
  public:
   static const int MORPH_MAX = 8;
-  BulletMLParser *parser[MORPH_MAX];
+  bml.ResolvedBulletML parser[MORPH_MAX];
   float[MORPH_MAX] ranks;
   float[MORPH_MAX] speeds;
-  int morphNum;
-  int morphIdx;
+  size_t morphNum;
+  size_t morphIdx;
  private:
 
   public this(int id) {
     super(id);
   }
 
-  public void setMorph(BulletMLParser *p[], float[] r, float[] s, int mn, int mi) {
+  public void setMorph(bml.ResolvedBulletML p[], float[] r, float[] s, size_t mn, size_t mi) {
     morphNum = mn;
     morphIdx = mi;
-    for (int i = 0; i < mn; i++) {
+    for (size_t i = 0; i < mn; i++) {
       parser[i] = p[i];
       ranks[i] = r[i];
       speeds[i] = s[i];
     }
+  }
+
+  public bml.ResolvedBulletML getParser() {
+    return parser[morphIdx];
   }
 
   public void resetMorph() {

@@ -6,7 +6,7 @@
 module abagames.tf.ship;
 
 private import std.math;
-private import opengl;
+private import derelict.opengl3.gl;
 private import abagames.util.vector;
 private import abagames.util.rand;
 private import abagames.util.actorpool;
@@ -88,7 +88,7 @@ public class Ship: BulletTarget {
     target = new VirtualBulletTarget;
     etb[0] = new EnemyTopBullet;
     createTumiki();
-    foreach (inout Vector fp; friendPos) {
+    foreach (ref Vector fp; friendPos) {
       fp = new Vector;
     }
   }

@@ -6,8 +6,8 @@
 module abagames.tf.tumiki;
 
 private import std.math;
-private import opengl;
-private import bulletml;
+private import derelict.opengl3.gl;
+private import bml = bulletml.bulletml;
 private import abagames.util.vector;
 private import abagames.util.bulletml.bullet;
 private import abagames.tf.screen;
@@ -32,7 +32,7 @@ public class Tumiki {
   Barrage[] barrage;
   static int propellerCnt = 0;
 
-  private final const float CHECK_HIT_SIZE_RETIO = 0.7;
+  private static const float CHECK_HIT_SIZE_RETIO = 0.7;
 
   public this(int shape, int color,
               float x, float y, float sx, float sy, float sizeRatio) {
@@ -483,7 +483,7 @@ public class Tumiki {
  */
 public class Barrage {
  public:
-  BulletMLParser *parser[];
+  bml.ResolvedBulletML parser[];
   float[] rank;
   float[] speed;
   int shape, color;
@@ -506,8 +506,8 @@ public class Barrage {
     this.postWait = postWait;
   }
 
-  public void addBml(char[] bmlFileName, float r, float s) {
-    BulletMLParser *p = BarrageManager.getInstance(bmlFileName);
+  public void addBml(string bmlFileName, float r, float s) {
+    bml.ResolvedBulletML p = BarrageManager.getInstance(bmlFileName);
     if (!p)
       throw new Error("File not found: " ~ bmlFileName);
     parser ~= p;

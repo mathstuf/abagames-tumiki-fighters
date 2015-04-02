@@ -69,9 +69,9 @@ public class StuckEnemy: Actor {
     lofs = new Vector;
     pos = new Vector;
     target = new VirtualBulletTarget;
-    foreach (inout Vector cd; colDatums)
+    foreach (ref Vector cd; colDatums)
       cd = new Vector;
-    foreach (inout EnemyTopBullet etb; topBullet)
+    foreach (ref EnemyTopBullet etb; topBullet)
       etb = new EnemyTopBullet;
   }
 
@@ -328,7 +328,7 @@ public class StuckEnemyPool: ActorPool {
   GameManager manager;
 
   public this(int n, ActorInitializer ini) {
-    auto StuckEnemy seClass = new StuckEnemy;
+    scope StuckEnemy seClass = new StuckEnemy;
     super(n, seClass, ini);
     manager = (cast(StuckEnemyInitializer) ini).manager;
   }

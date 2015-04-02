@@ -5,9 +5,11 @@
  */
 module abagames.tf.stagemanager;
 
+private import core.stdc.stdlib;
+private import std.conv;
 private import std.string;
 private import std.math;
-private import bulletml;
+private import bml = bulletml.bulletml;
 private import abagames.util.logger;
 private import abagames.util.rand;
 private import abagames.util.vector;
@@ -52,13 +54,13 @@ public class StageManager {
     this.enemies = enemies;
     this.field = field;
     rand = new Rand;
-    foreach (inout EnemyAppearance ea; appearance)
+    foreach (ref EnemyAppearance ea; appearance)
       ea = new EnemyAppearance;
     eaIdx = appearance.length;
     uint sn = 1;
-    foreach (inout StagePattern sp; stage) {
-      Logger.info("Load stage: " ~ std.string.toString(sn));
-      sp = new StagePattern("stg" ~ std.string.toString(sn) ~ ".stg");
+    foreach (ref StagePattern sp; stage) {
+      Logger.info("Load stage: " ~ to!string(sn));
+      sp = new StagePattern("stg" ~ to!string(sn) ~ ".stg");
       sn++;
     }
     Logger.info("Load stages completed.");
@@ -171,8 +173,8 @@ public class StagePattern {
   long randSeed;
   int warningCnt;
  private:
-  static const char[] STAGE_DIR_NAME = "stage";
-  static int[char[]] posTypeStr;
+  static const string STAGE_DIR_NAME = "stage";
+  static int[string] posTypeStr;
 
   public static this() {
     posTypeStr["f"] = 0;
@@ -186,20 +188,20 @@ public class StagePattern {
   // EnemySpec file name,
   // move BulletML file name, {speedRank}/{withdrawCnt, speed, [x, y], [idx, speed, [x, y]]}],
   // (use PointsMovePattern when moveBulletML == "p", end when x == "e", idx == "e")
-  public this(char[][] data) {
+  public this(string[] data) {
     StringIterator si = new StringIterator(data);
-    randSeed = atoi(si.next);
-    warningCnt = atoi(si.next);
+    randSeed = atoi(si.next.ptr);
+    warningCnt = atoi(si.next.ptr);
     for (;;) {
       if (!si.hasNext)
         break;
-      int startTime = atoi(si.next);
-      int duration = atoi(si.next);
-      int interval = atoi(si.next);
-      char[] v = si.next;
+      int startTime = atoi(si.next.ptr);
+      int duration = atoi(si.next.ptr);
+      int interval = atoi(si.next.ptr);
+      string v = si.next;
       int posType = posTypeStr[v];
-      float pos = atof(si.next);
-      float width = atof(si.next);
+      float pos = atof(si.next.ptr);
+      float width = atof(si.next.ptr);
       v = si.next;
       bool wted;
       if (v == "y")
@@ -214,27 +216,27 @@ public class StagePattern {
       v = si.next;
       if (v == "p") {
         eap.startSetPointsMove();
-        eap.setWithdrawCnt(atoi(si.next));
+        eap.setWithdrawCnt(atoi(si.next.ptr));
         int atIdx = PointsMovePattern.BASIC_PATTERN_IDX;
         for (;;) {
-          float speed = atof(si.next);
+          float speed = atof(si.next.ptr);
           eap.setMoveSpeed(atIdx, speed);
           for (;;) {
             v = si.next;
             if (v == "e")
               break;
-            float x = atof(v);
-            float y = atof(si.next);
+            float x = atof(v.ptr);
+            float y = atof(si.next.ptr);
             eap.addMovePoint(atIdx, x, y);
           }
           v = si.next;
           if (v == "e")
             break;
-          atIdx = atoi(v);
+          atIdx = atoi(v.ptr);
         }
       } else {
         eap.setMoveBulletML(v);
-        eap.setSpeedRank(atof(si.next));
+        eap.setSpeedRank(atof(si.next.ptr));
       }
       switch (posType) {
       case EnemyAppearancePattern.AppearancePos.FRONT:
@@ -249,8 +251,8 @@ public class StagePattern {
     }
   }
 
-  public this(char[] fileName) {
-    char[][] data = CSVTokenizer.readFile(STAGE_DIR_NAME ~ "/" ~ fileName);
+  public this(string fileName) {
+    string[] data = CSVTokenizer.readFile(STAGE_DIR_NAME ~ "/" ~ fileName);
     this(data);
   }
 }
@@ -298,7 +300,7 @@ public class EnemyAppearancePattern {
     (cast(PointsMovePattern) move).point[idx] ~= new Vector(x, y);
   }
 
-  public void setMoveBulletML(char[] fn) {
+  public void setMoveBulletML(string fn) {
     move = new BulletMLMovePattern;
     (cast(BulletMLMovePattern) move).parser = BarrageManager.getInstance(fn);
     if (!(cast(BulletMLMovePattern) move).parser)
@@ -317,7 +319,7 @@ public abstract class EnemyMovePattern {
 
 public class BulletMLMovePattern: EnemyMovePattern {
  public:
-  BulletMLParser *parser;
+  bml.ResolvedBulletML parser;
   float speed;
 }
 

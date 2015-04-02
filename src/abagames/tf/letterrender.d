@@ -5,7 +5,7 @@
  */
 module abagames.tf.letterrender;
 
-private import opengl;
+private import derelict.opengl3.gl;
 private import abagames.util.rand;
 private import abagames.tf.screen;
 private import abagames.tf.tumiki;
@@ -19,8 +19,8 @@ public class LetterRender {
   static const float LETTER_WIDTH = 2.1f;
   static const float LETTER_HEIGHT = 3.0f;
   static const int COLOR_NUM = 6;
+  static const int LETTER_NUM = 43; // FIXME: used from attractmanager.d
  private:
-  static const int LETTER_NUM = 43;
   static const int DISPLAY_LIST_NUM = LETTER_NUM * COLOR_NUM;
   static Rand rand;
 
@@ -32,7 +32,8 @@ public class LetterRender {
     return s * LETTER_HEIGHT;
   }
 
-  private static void drawLetter(int n, float x, float y, float s, float d, int c) {
+  // FIXME: used from mobileletter.d
+  public static void drawLetter(int n, float x, float y, float s, float d, int c) {
     glPushMatrix();
     glTranslatef(x, y, 0);
     glScalef(s, s, s);
@@ -76,7 +77,7 @@ public class LetterRender {
     return idx;
   }
 
-  public static void drawString(char[] str, float lx, float y, float s, int d, int cl,
+  public static void drawString(string str, float lx, float y, float s, int d, int cl,
                                 bool rev) {
     if (cl < 0)
       rand.setSeed(-cl);
@@ -131,7 +132,7 @@ public class LetterRender {
     }
   }
 
-  public static void drawString(char[] str, float lx, float y, float s, int d, int cl) {
+  public static void drawString(string str, float lx, float y, float s, int d, int cl) {
     drawString(str, lx, y, s, d, cl, false);
   }
 

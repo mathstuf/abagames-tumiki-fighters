@@ -14,9 +14,9 @@ private import std.string;
 public class CSVTokenizer {
  private:
 
-  public static char[][] readFile(char[] fileName) {
-    char[][] result;
-    auto File fd = new File;
+  public static string[] readFile(string fileName) {
+    string[] result;
+    scope File fd = new File;
     fd.open(fileName);
     for (;;) {
       char[] line = fd.readLine();
@@ -26,7 +26,7 @@ public class CSVTokenizer {
       foreach (char[] s; spl) {
         char[] r = strip(s);
         if (r.length > 0)
-          result ~= r;
+          result ~= r.idup;
       }
     }
     fd.close();

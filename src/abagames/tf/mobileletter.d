@@ -6,7 +6,7 @@
 module abagames.tf.mobileletter;
 
 private import std.math;
-private import opengl;
+private import derelict.opengl3.gl;
 private import abagames.util.vector;
 private import abagames.util.rand;
 private import abagames.util.actor;
@@ -103,12 +103,12 @@ public class MobileLetterPool: ActorPool {
 
   public this(int n, ActorInitializer ini, Field f) {
     field = f;
-    auto MobileLetter mlClass = new MobileLetter;
+    scope MobileLetter mlClass = new MobileLetter;
     super(n, mlClass, ini);
     rand = new Rand;
   }
 
-  public void add(char[] str, float x, float lgt, float size, int cnt, int col) {
+  public void add(string str, float x, float lgt, float size, int cnt, int col) {
     int color = col;
     if (col < 0)
       rand.setSeed(-col);

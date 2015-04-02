@@ -5,12 +5,15 @@
  */
 module abagames.tf.bulletinst;
 
+private import std.math;
 private import abagames.tf.morphbullet;
 private import abagames.tf.bullettarget;
 private import abagames.tf.stagemanager;
+private import abagames.util.bulletml.bullet;
+private import abagames.util.vector;
 
 /**
- * Bullet with params of sppedRank, shape, color, size,
+ * Bullet with params of speedRank, shape, color, size,
  * the horizontal reverse moving, target, type.
  */
 public class BulletInst: MorphBullet {
@@ -71,5 +74,13 @@ public class BulletInst: MorphBullet {
 
   public float speedRank(float value) {
     return speedRankNum = value;
+  }
+
+  public override double getAimDirection() {
+    Vector b = pos;
+    Vector t = Bullet.activeTarget;
+    float xrev = xReverse;
+    float yrev = yReverse;
+    return rtod((atan2(t.x - b.x, t.y - b.y) * xrev + PI / 2) * yrev - PI / 2);
   }
 }

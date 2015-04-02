@@ -28,14 +28,14 @@ public class SoundManager {
   GameManager manager;
   Music bgm[BGM_NUM];
   Chunk se[SE_NUM];
-  const char[][] bgmFileName =
+  const string[] bgmFileName =
     ["we_are_tumiki_fighters.ogg",
     "just_over_the_horizon.ogg",
     "panic_on_meadow.ogg",
     "here_comes_a_gigantic_toy.ogg",
     "battle_over_the_junk_city.ogg",
     "return_to_home.ogg"];
-  const char[][] seFileName =
+  const string[] seFileName =
     ["ship_shot.wav", "stuck.wav", "stuck_bonus.wav",
     "stuck_destroyed.wav", "ship_destroyed.wav",
     "enemy_damaged.wav", "small_enemy_destroyed.wav", "enemy_destroyed.wav", "boss_destroyed.wav",
@@ -52,13 +52,13 @@ public class SoundManager {
     if (Sound.noSound)
       return;
     int i = 0;
-    foreach (inout Music b; bgm) {
+    foreach (ref Music b; bgm) {
       b = new Music;
       b.load(bgmFileName[i]);
       i++;
     }
     i = 0;
-    foreach (inout Chunk c; se) {
+    foreach (ref Chunk c; se) {
       c = new Chunk;
       c.load(seFileName[i], seChannel[i]);
       i++;

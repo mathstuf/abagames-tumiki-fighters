@@ -13,6 +13,7 @@ add_library(tf_util_sdl STATIC
     ${util_sdl_srcs})
 target_link_libraries(tf_util_sdl
     tf_util
+    gl3n
     Derelict::opengl3
     Derelict::sdl2
     Derelict::util)

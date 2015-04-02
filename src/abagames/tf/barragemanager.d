@@ -8,7 +8,7 @@ module abagames.tf.barragemanager;
 private import std.string;
 private import std.path;
 private import std.file;
-private import bulletml;
+private import bml = bulletml.bulletml;
 private import abagames.util.logger;
 private import abagames.tf.morphbullet;
 
@@ -17,32 +17,28 @@ private import abagames.tf.morphbullet;
  */
 public class BarrageManager {
  private:
-  static BulletMLParserTinyXML *parser[char[]];
-  static const char[] BARRAGE_DIR_NAME = "barrage";
+  static bml.ResolvedBulletML parser[string];
+  static const string BARRAGE_DIR_NAME = "barrage";
 
   public static void loadBulletMLs() {
-    char[][] dirs = listdir(BARRAGE_DIR_NAME);
-    foreach (char[] dirName; dirs) {
-      char[][] files = listdir(BARRAGE_DIR_NAME ~ "/" ~ dirName);
-      foreach (char[] fileName; files) {
-        if (getExt(fileName) != "xml")
-          continue;
-        char[] barrageName = dirName ~ "/" ~ fileName;
-        Logger.info("Load BulletML: " ~ barrageName);
-        parser[barrageName] =
-          BulletMLParserTinyXML_new(std.string.toStringz(BARRAGE_DIR_NAME ~ "/" ~ barrageName));
-        BulletMLParserTinyXML_parse(parser[barrageName]);
+    foreach (string dirPath; dirEntries(BARRAGE_DIR_NAME, SpanMode.shallow)) {
+      if (!isDir(dirPath)) {
+        continue;
+      }
+      string dirName = baseName(dirPath);
+      foreach (string filePath; dirEntries(dirPath, "*.xml", SpanMode.shallow)) {
+        string fileName = baseName(filePath);
+        parser[dirName ~ "/" ~ fileName] = loadInstance(filePath);
       }
     }
   }
 
-  public static void unloadBulletMLs() {
-    foreach (BulletMLParserTinyXML *p; parser) {
-      BulletMLParserTinyXML_delete(p);
-    }
+  private static bml.ResolvedBulletML loadInstance(string path) {
+    Logger.info("Load BulletML: " ~ path);
+    return bml.resolve(bml.parse(path));
   }
 
-  public static BulletMLParserTinyXML* getInstance(char[] fileName) {
+  public static bml.ResolvedBulletML getInstance(string fileName) {
     return parser[fileName];
   }
 }

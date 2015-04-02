@@ -6,7 +6,7 @@
 module abagames.tf.particle;
 
 private import std.math;
-private import opengl;
+private import derelict.opengl3.gl;
 private import abagames.util.vector;
 private import abagames.util.rand;
 private import abagames.util.actor;
@@ -83,7 +83,7 @@ public class Particle: Actor {
       Screen.setColor(0.8, 0.8, 0.8, alpha);
       break;
     case TypeName.SPARK:
-      if (cnt & 1 == 0)
+      if ((cnt & 1) == 0)
         Screen.setColor(1, 0.4, 0.2, alpha);
       else
         Screen.setColor(1, 1, 0.1, alpha);
@@ -103,7 +103,7 @@ public class ParticlePool: ActorPool {
  private:
 
   public this(int n, ActorInitializer ini) {
-    auto Particle particleClass = new Particle;
+    scope Particle particleClass = new Particle;
     super(n, particleClass, ini);
   }
 

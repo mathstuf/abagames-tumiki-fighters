@@ -69,7 +69,7 @@ public class Enemy: Actor {
     gauge = ei.gauge;
     pos = new Vector;
     mv = new EnemyMovement;
-    foreach (inout EnemyPart ep; parts)
+    foreach (ref EnemyPart ep; parts)
       ep = new EnemyPart(ship, bullets, fragments);
   }
 
@@ -399,7 +399,7 @@ public class EnemyPool: ActorPool {
  private:
 
   public this(int n, ActorInitializer ini) {
-    auto Enemy enemyClass = new Enemy;
+    scope Enemy enemyClass = new Enemy;
     super(n, enemyClass, ini);
   }
 
@@ -437,7 +437,7 @@ public class EnemyPart {
     this.target = target;
     this.bullets = bullets;
     this.fragments = fragments;
-    foreach (inout EnemyTopBullet etb; topBullet)
+    foreach (ref EnemyTopBullet etb; topBullet)
       etb = new EnemyTopBullet;
   }
 
@@ -497,8 +497,8 @@ public class EnemyPart {
         etb.actor.bullet.pos.x = x + ofsx;
         etb.actor.bullet.pos.y = y + ofsy;
         if (coverPartsNum > 0 && !etb.coverChecked) {
-          for (int i = 0; i < coverPartsNum; i++) {
-            if (coverParts[i].shield > 0 && coverParts[i].covers(ofsx, ofsy)) {
+          for (int j = 0; j < coverPartsNum; j++) {
+            if (coverParts[j].shield > 0 && coverParts[j].covers(ofsx, ofsy)) {
               etb.actor.removeForced();
               etb.actor = null;
               etb.deactivated = true;

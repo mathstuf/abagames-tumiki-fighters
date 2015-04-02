@@ -3,10 +3,10 @@
  *
  * Copyright 2004 Kenta Cho. All rights reserved.
  */
-module abagames.tf.playscreen;
+module abagames.tf.screen;
 
 private import std.math;
-private import opengl;
+private import derelict.opengl3.gl;
 private import abagames.util.sdl.screen3d;
 
 /**
@@ -14,7 +14,7 @@ private import abagames.util.sdl.screen3d;
  */
 public class Screen: Screen3D {
  public:
-  static const char[] CAPTION = "TUMIKI Fighters";
+  static const string CAPTION = "TUMIKI Fighters";
 
   protected override void init() {
     setCaption(CAPTION);

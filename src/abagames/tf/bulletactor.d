@@ -6,8 +6,8 @@
 module abagames.tf.bulletactor;
 
 private import std.math;
-private import opengl;
-private import bulletml;
+private import derelict.opengl3.gl;
+private import bml = bulletml.bulletml;
 private import abagames.util.actor;
 private import abagames.util.vector;
 private import abagames.util.bulletml.bullet;
@@ -98,14 +98,14 @@ public class BulletActor: Actor {
     shouldBeRemoved = false;
   }
 
-  public void set(BulletMLRunner* runner,
+  public void set(bml.BulletMLRunner runner,
                   float x, float y, float deg, float speed,
                   float rank, float speedRank,
                   int shape, int color, float size,
                   float xReverse, float yReverse,
                   BulletTarget target, int type,
-                  BulletMLParser *parser[], float[] ranks, float[] speeds,
-                  int morphNum, int morphIdx) {
+                  bml.ResolvedBulletML parser[], float[] ranks, float[] speeds,
+                  size_t morphNum, size_t morphIdx) {
     bullet.set(runner, x, y, deg, speed, rank);
     bullet.setMorph(parser, ranks, speeds, morphNum, morphIdx);
     isSimple = false;
@@ -148,10 +148,8 @@ public class BulletActor: Actor {
 
   public void rewind() {
     bullet.remove();
-    BulletMLRunner *runner = BulletMLRunner_new_parser(bullet.parser[0]);
-    BulletActorPool.registFunctions(runner);
-    bullet.setRunner(runner);
     bullet.resetMorph();
+    bullet.setRunner(bml.createRunner(bullet, bullet.getParser()));
   }
 
   public void remove() {
@@ -206,8 +204,8 @@ public class BulletActor: Actor {
 
   public override void move() {
     Vector tpos = bullet.target.getTargetPos();
-    Bullet.target.x = tpos.x;
-    Bullet.target.y = tpos.y;
+    Bullet.activeTarget.x = tpos.x;
+    Bullet.activeTarget.y = tpos.y;
     ppos.x = bullet.pos.x;
     ppos.y = bullet.pos.y;
     if (isTop) {

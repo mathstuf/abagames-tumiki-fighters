@@ -5,9 +5,11 @@
  */
 module abagames.tf.field;
 
+private import core.stdc.stdlib;
+private import std.conv;
 private import std.string;
 private import std.math;
-private import opengl;
+private import derelict.opengl3.gl;
 private import abagames.util.vector;
 private import abagames.util.actor;
 private import abagames.util.actorpool;
@@ -41,14 +43,14 @@ public class Field {
     size.y = 16;
     eyeZ = 20;
     uint sn = 1;
-    foreach (inout FieldPattern fp; fieldPattern) {
-      Logger.info("Load field: " ~ std.string.toString(sn));
-      fp = new FieldPattern("fld" ~ std.string.toString(sn) ~ ".fld");
+    foreach (ref FieldPattern fp; fieldPattern) {
+      Logger.info("Load field: " ~ to!string(sn));
+      fp = new FieldPattern("fld" ~ to!string(sn) ~ ".fld");
       sn++;
     }
     Logger.info("Load fields completed.");
-    auto FieldObj fieldObjClass = new FieldObj;
-    auto FieldObjInitializer foi = new FieldObjInitializer(this);
+    scope FieldObj fieldObjClass = new FieldObj;
+    scope FieldObjInitializer foi = new FieldObjInitializer(this);
     fieldObjs = new ActorPool(64, fieldObjClass, foi);
     rand = new Rand;
   }
@@ -249,26 +251,26 @@ public class FieldPattern {
   float mtr, mtg, mtb;
   float mrr, mrg, mrb;
  private:
-  static const char[] FIELD_DIR_NAME = "field";
+  static const string FIELD_DIR_NAME = "field";
 
   // Initialize FieldPattern with the array.
   // randSeed, scrollSpeed,
   // [z, [interval], [TumikiSetName]]
   // (end when interval == "e", TumikiSetName == "e")
-  public this(char[][] data) {
+  public this(string[] data) {
     StringIterator si = new StringIterator(data);
-    randSeed = atoi(si.next);
-    scrollSpeed = atof(si.next);
-    br = atof(si.next); bg = atof(si.next); bb = atof(si.next);
-    gr = atof(si.next); gg = atof(si.next); gb = atof(si.next);
-    mtr = atof(si.next); mtg = atof(si.next); mtb = atof(si.next);
+    randSeed = atoi(si.next.ptr);
+    scrollSpeed = atof(si.next.ptr);
+    br = atof(si.next.ptr); bg = atof(si.next.ptr); bb = atof(si.next.ptr);
+    gr = atof(si.next.ptr); gg = atof(si.next.ptr); gb = atof(si.next.ptr);
+    mtr = atof(si.next.ptr); mtg = atof(si.next.ptr); mtb = atof(si.next.ptr);
     mrr = (br * 2+ gr) / 3;
     mrg = (bg * 2+ gg) / 3;
     mrb = (bb * 2+ gb) / 3;
     for (;;) {
       if (!si.hasNext)
         break;
-      float z = atof(si.next);
+      float z = atof(si.next.ptr);
       FieldLinePattern flp = new FieldLinePattern;
       if (z > 0) {
         flp.z = -z;
@@ -278,13 +280,13 @@ public class FieldPattern {
         flp.onGround = false;
       }
       for (;;) {
-        char[] v = si.next;
+        string v = si.next;
         if (v == "e")
           break;
-        flp.addInterval(atoi(v));
+        flp.addInterval(atoi(v.ptr));
       }
       for (;;) {
-        char[] v = si.next;
+        string v = si.next;
         if (v == "e")
           break;
         flp.addTumikiSet(TumikiSet.getInstance(v));
@@ -293,8 +295,8 @@ public class FieldPattern {
     }
   }
 
-  public this(char[] fileName) {
-    char[][] data = CSVTokenizer.readFile(FIELD_DIR_NAME ~ "/" ~ fileName);
+  public this(string fileName) {
+    string[] data = CSVTokenizer.readFile(FIELD_DIR_NAME ~ "/" ~ fileName);
     this(data);
   }
 }

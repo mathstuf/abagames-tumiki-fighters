@@ -36,4 +36,4 @@ public class ArrayIterator {
 }
 }
 
-alias ArrayIterator!(char[]) StringIterator;
+alias ArrayIterator!(string) StringIterator;

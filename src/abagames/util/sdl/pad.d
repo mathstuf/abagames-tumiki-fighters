@@ -5,8 +5,9 @@
  */
 module abagames.util.sdl.pad;
 
+private import std.conv;
 private import std.string;
-private import SDL;
+private import derelict.sdl2.sdl;
 private import abagames.util.sdl.input;
 private import abagames.util.sdl.sdlexception;
 
@@ -31,13 +32,13 @@ public class Pad: Input {
   public void openJoystick() {
     if (SDL_InitSubSystem(SDL_INIT_JOYSTICK) < 0) {
       throw new SDLInitFailedException(
-        "Unable to init SDL joystick: " ~ std.string.toString(SDL_GetError()));
+        "Unable to init SDL joystick: " ~ to!string(SDL_GetError()));
     }
     stick = SDL_JoystickOpen(0);
   }
 
   public void handleEvent(SDL_Event *event) {
-    keys = SDL_GetKeyState(null);
+    keys = SDL_GetKeyboardState(null);
   }
 
   // Joystick and keyboard handler.
@@ -49,20 +50,20 @@ public class Pad: Input {
       x = SDL_JoystickGetAxis(stick, 0);
       y = SDL_JoystickGetAxis(stick, 1);
     }
-    if (keys[SDLK_RIGHT] == SDL_PRESSED || keys[SDLK_KP6] == SDL_PRESSED ||
-        keys[SDLK_d] == SDL_PRESSED || x > JOYSTICK_AXIS) {
+    if (keys[SDL_SCANCODE_RIGHT] == SDL_PRESSED || keys[SDL_SCANCODE_KP_6] == SDL_PRESSED ||
+        keys[SDL_SCANCODE_D] == SDL_PRESSED || x > JOYSTICK_AXIS) {
       pad |= PAD_RIGHT;
     }
-    if (keys[SDLK_LEFT] == SDL_PRESSED || keys[SDLK_KP4] == SDL_PRESSED ||
-        keys[SDLK_a] == SDL_PRESSED || x < -JOYSTICK_AXIS) {
+    if (keys[SDL_SCANCODE_LEFT] == SDL_PRESSED || keys[SDL_SCANCODE_KP_4] == SDL_PRESSED ||
+        keys[SDL_SCANCODE_A] == SDL_PRESSED || x < -JOYSTICK_AXIS) {
       pad |= PAD_LEFT;
     }
-    if (keys[SDLK_DOWN] == SDL_PRESSED || keys[SDLK_KP2] == SDL_PRESSED ||
-        keys[SDLK_s] == SDL_PRESSED || y > JOYSTICK_AXIS) {
+    if (keys[SDL_SCANCODE_DOWN] == SDL_PRESSED || keys[SDL_SCANCODE_KP_2] == SDL_PRESSED ||
+        keys[SDL_SCANCODE_S] == SDL_PRESSED || y > JOYSTICK_AXIS) {
       pad |= PAD_DOWN;
     }
-    if (keys[SDLK_UP] == SDL_PRESSED ||  keys[SDLK_KP8] == SDL_PRESSED ||
-        keys[SDLK_w] == SDL_PRESSED || y < -JOYSTICK_AXIS) {
+    if (keys[SDL_SCANCODE_UP] == SDL_PRESSED ||  keys[SDL_SCANCODE_KP_8] == SDL_PRESSED ||
+        keys[SDL_SCANCODE_W] == SDL_PRESSED || y < -JOYSTICK_AXIS) {
       pad |= PAD_UP;
     }
     return pad;
@@ -81,16 +82,16 @@ public class Pad: Input {
       btn7 = SDL_JoystickGetButton(stick, 6);
       btn8 = SDL_JoystickGetButton(stick, 7);
     }
-    if (keys[SDLK_z] == SDL_PRESSED || keys[SDLK_PERIOD] == SDL_PRESSED ||
-        keys[SDLK_LCTRL] == SDL_PRESSED ||
+    if (keys[SDL_SCANCODE_Z] == SDL_PRESSED || keys[SDL_SCANCODE_PERIOD] == SDL_PRESSED ||
+        keys[SDL_SCANCODE_LCTRL] == SDL_PRESSED ||
         btn1 || btn4 || btn5 || btn8) {
       if (!buttonReversed)
         btn |= PAD_BUTTON1;
       else
         btn |= PAD_BUTTON2;
     }
-    if (keys[SDLK_x] == SDL_PRESSED || keys[SDLK_SLASH] == SDL_PRESSED ||
-        keys[SDLK_LALT] == SDL_PRESSED || keys[SDLK_LSHIFT] == SDL_PRESSED ||
+    if (keys[SDL_SCANCODE_X] == SDL_PRESSED || keys[SDL_SCANCODE_SLASH] == SDL_PRESSED ||
+        keys[SDL_SCANCODE_LALT] == SDL_PRESSED || keys[SDL_SCANCODE_LSHIFT] == SDL_PRESSED ||
         btn2 || btn3 || btn6 || btn7) {
       if (!buttonReversed)
         btn |= PAD_BUTTON2;

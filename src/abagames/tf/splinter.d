@@ -60,7 +60,7 @@ public class Splinter: Actor {
     manager = si.manager;
     pos = new Vector;
     vel = new Vector;
-    foreach (inout Vector cd; colDatums)
+    foreach (ref Vector cd; colDatums)
       cd = new Vector;
   }
 
@@ -153,8 +153,8 @@ public class Splinter: Actor {
       }
       if (ship.cnt < -Ship.INVINCIBLE_CNT)
         return;
-      foreach (Vector cd; colDatums) {
-        if (ship.stuckEnemies.checkHit(cd)) {
+      foreach (Vector colDat; colDatums) {
+        if (ship.stuckEnemies.checkHit(colDat)) {
           StuckEnemy se = cast(StuckEnemy) ship.stuckEnemies.getInstance();
           if (se) {
             float ox = pos.x - ship.pos.x, oy = pos.y - ship.pos.y;
@@ -228,7 +228,7 @@ public class SplinterPool: ActorPool {
  private:
 
   public this(int n, ActorInitializer ini) {
-    auto Splinter splinterClass = new Splinter;
+    scope Splinter splinterClass = new Splinter;
     super(n, splinterClass, ini);
   }
 
