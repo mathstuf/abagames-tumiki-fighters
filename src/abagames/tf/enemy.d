@@ -329,7 +329,9 @@ public class Enemy: Actor {
         if (ep.shield <= 0) {
           if (ep.spec.damageToMainBody > 0) {
             parts[0].shield -= ep.spec.damageToMainBody;
-            particles.add(5, pos, 0, PI * 2, 0.1, parts[0].spec.size / 4, Particle.TypeName.SMOKE);
+            // FIXME: spec.size does not exist. Guessing at its replacement...
+            //particles.add(5, pos, 0, PI * 2, 0.1, parts[0].spec.size / 4, Particle.TypeName.SMOKE);
+            particles.add(5, pos, 0, PI * 2, 0.1, parts[0].spec.tumikiSet.size / 4, Particle.TypeName.SMOKE);
           }
           manager.addScore(ep.spec.tumikiSet.score, p);
           if (ep.firstShield <= 1)
