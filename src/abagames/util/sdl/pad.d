@@ -31,7 +31,7 @@ public class Pad: Input {
   public void openJoystick() {
     if (SDL_InitSubSystem(SDL_INIT_JOYSTICK) < 0) {
       throw new SDLInitFailedException(
-	"Unable to init SDL joystick: " ~ std.string.toString(SDL_GetError()));
+        "Unable to init SDL joystick: " ~ std.string.toString(SDL_GetError()));
     }
     stick = SDL_JoystickOpen(0);
   }
@@ -39,7 +39,7 @@ public class Pad: Input {
   public void handleEvent(SDL_Event *event) {
     keys = SDL_GetKeyState(null);
   }
-  
+
   // Joystick and keyboard handler.
 
   public int getPadState() {
@@ -49,20 +49,20 @@ public class Pad: Input {
       x = SDL_JoystickGetAxis(stick, 0);
       y = SDL_JoystickGetAxis(stick, 1);
     }
-    if (keys[SDLK_RIGHT] == SDL_PRESSED || keys[SDLK_KP6] == SDL_PRESSED || 
-	keys[SDLK_d] == SDL_PRESSED || x > JOYSTICK_AXIS) {
+    if (keys[SDLK_RIGHT] == SDL_PRESSED || keys[SDLK_KP6] == SDL_PRESSED ||
+        keys[SDLK_d] == SDL_PRESSED || x > JOYSTICK_AXIS) {
       pad |= PAD_RIGHT;
     }
     if (keys[SDLK_LEFT] == SDL_PRESSED || keys[SDLK_KP4] == SDL_PRESSED ||
-	keys[SDLK_a] == SDL_PRESSED || x < -JOYSTICK_AXIS) {
+        keys[SDLK_a] == SDL_PRESSED || x < -JOYSTICK_AXIS) {
       pad |= PAD_LEFT;
     }
     if (keys[SDLK_DOWN] == SDL_PRESSED || keys[SDLK_KP2] == SDL_PRESSED ||
-	keys[SDLK_s] == SDL_PRESSED || y > JOYSTICK_AXIS) {
+        keys[SDLK_s] == SDL_PRESSED || y > JOYSTICK_AXIS) {
       pad |= PAD_DOWN;
     }
     if (keys[SDLK_UP] == SDL_PRESSED ||  keys[SDLK_KP8] == SDL_PRESSED ||
-	keys[SDLK_w] == SDL_PRESSED || y < -JOYSTICK_AXIS) {
+        keys[SDLK_w] == SDL_PRESSED || y < -JOYSTICK_AXIS) {
       pad |= PAD_UP;
     }
     return pad;
@@ -82,20 +82,20 @@ public class Pad: Input {
       btn8 = SDL_JoystickGetButton(stick, 7);
     }
     if (keys[SDLK_z] == SDL_PRESSED || keys[SDLK_PERIOD] == SDL_PRESSED ||
-	keys[SDLK_LCTRL] == SDL_PRESSED || 
-	btn1 || btn4 || btn5 || btn8) {
+        keys[SDLK_LCTRL] == SDL_PRESSED ||
+        btn1 || btn4 || btn5 || btn8) {
       if (!buttonReversed)
-	btn |= PAD_BUTTON1;
+        btn |= PAD_BUTTON1;
       else
-	btn |= PAD_BUTTON2;
+        btn |= PAD_BUTTON2;
     }
     if (keys[SDLK_x] == SDL_PRESSED || keys[SDLK_SLASH] == SDL_PRESSED ||
-	keys[SDLK_LALT] == SDL_PRESSED || keys[SDLK_LSHIFT] == SDL_PRESSED ||
-	btn2 || btn3 || btn6 || btn7) {
+        keys[SDLK_LALT] == SDL_PRESSED || keys[SDLK_LSHIFT] == SDL_PRESSED ||
+        btn2 || btn3 || btn6 || btn7) {
       if (!buttonReversed)
-	btn |= PAD_BUTTON2;
+        btn |= PAD_BUTTON2;
       else
-	btn |= PAD_BUTTON1;
+        btn |= PAD_BUTTON1;
     }
     return btn;
   }

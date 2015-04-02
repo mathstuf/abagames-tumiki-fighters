@@ -40,9 +40,9 @@ public class PrefManager: abagames.util.prefmanager.PrefManager {
       fd.open(PREF_FILE);
       fd.read(ver);
       if (ver != VERSION_NUM)
-	throw new Error("Wrong version num");
+        throw new Error("Wrong version num");
       foreach (RankingItem ri; ranking)
-	ri.load(fd);
+        ri.load(fd);
     } catch (Error e) {
       init();
     } finally {
@@ -63,10 +63,10 @@ public class PrefManager: abagames.util.prefmanager.PrefManager {
     int i = 0;
     for (; i < RANKING_NUM; i++)
       if (ranking[i].score < sc)
-	break;
+        break;
     if (i >= RANKING_NUM)
       return;
-    for (int j = RANKING_NUM - 1; j > i; j--) 
+    for (int j = RANKING_NUM - 1; j > i; j--)
       ranking[j] = ranking[j - 1];
     ranking[i] = new RankingItem(sc, st);
   }

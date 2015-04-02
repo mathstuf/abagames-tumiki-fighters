@@ -33,7 +33,7 @@ public class Screen3D: Screen {
     // Initialize SDL.
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
       throw new SDLInitFailedException(
-	"Unable to initialize SDL: " ~ std.string.toString(SDL_GetError()));
+        "Unable to initialize SDL: " ~ std.string.toString(SDL_GetError()));
     }
     // Create an OpenGL screen.
     Uint32 videoFlags;
@@ -41,10 +41,10 @@ public class Screen3D: Screen {
       videoFlags = SDL_OPENGL | SDL_RESIZABLE;
     } else {
       videoFlags = SDL_OPENGL | SDL_FULLSCREEN;
-    } 
+    }
     if (SDL_SetVideoMode(width, height, 0, videoFlags) == null) {
       throw new SDLInitFailedException
-	("Unable to create SDL screen: " ~ std.string.toString(SDL_GetError()));
+        ("Unable to create SDL screen: " ~ std.string.toString(SDL_GetError()));
     }
     glViewport(0, 0, width, height);
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -61,10 +61,10 @@ public class Screen3D: Screen {
     glLoadIdentity();
     //gluPerspective(45.0f, cast(GLfloat) width / cast(GLfloat) height, nearPlane, farPlane);
     glFrustum(-nearPlane,
-	      nearPlane,
-	      -nearPlane * cast(GLfloat)height / cast(GLfloat)width,
-	      nearPlane * cast(GLfloat)height / cast(GLfloat)width,
-	      0.1f, farPlane);
+              nearPlane,
+              -nearPlane * cast(GLfloat)height / cast(GLfloat)width,
+              nearPlane * cast(GLfloat)height / cast(GLfloat)width,
+              0.1f, farPlane);
     glMatrixMode(GL_MODELVIEW);
   }
 

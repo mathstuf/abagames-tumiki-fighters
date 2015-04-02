@@ -5,10 +5,10 @@
           xmlns="http://www.asahi-net.or.jp/~cs8k-cyu/bulletml">
 
 <action label="top">
-	<accel>
-		<vertical>(10+$rand*10)*$rank</vertical>
-		<term>120+$rand*120</term>
-	</accel>
+ <accel>
+  <vertical>(10+$rand*10)*$rank</vertical>
+  <term>120+$rand*120</term>
+ </accel>
 </action>
 
 </bulletml>

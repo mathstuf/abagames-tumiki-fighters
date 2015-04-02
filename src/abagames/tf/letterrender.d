@@ -76,8 +76,8 @@ public class LetterRender {
     return idx;
   }
 
-  public static void drawString(char[] str, float lx, float y, float s, int d, int cl, 
-				bool rev) {
+  public static void drawString(char[] str, float lx, float y, float s, int d, int cl,
+                                bool rev) {
     if (cl < 0)
       rand.setSeed(-cl);
     lx += LETTER_WIDTH * s / 2;
@@ -101,32 +101,32 @@ public class LetterRender {
     }
     foreach (char c; str) {
       if (c != ' ') {
-	idx = convertCharToInt(c);
-	if (cl >= 0) {
-	  if (rev)
-	    drawLetterRev(idx, x, y, s, ld, cl);
-	  else
-	    drawLetter(idx, x, y, s, ld, cl);
-	} else {
-	  if (rev)
-	    drawLetterRev(idx, x, y, s, ld, rand.nextInt(COLOR_NUM));
-	  else
-	    drawLetter(idx, x, y, s, ld, rand.nextInt(COLOR_NUM));
-	}
+        idx = convertCharToInt(c);
+        if (cl >= 0) {
+          if (rev)
+            drawLetterRev(idx, x, y, s, ld, cl);
+          else
+            drawLetter(idx, x, y, s, ld, cl);
+        } else {
+          if (rev)
+            drawLetterRev(idx, x, y, s, ld, rand.nextInt(COLOR_NUM));
+          else
+            drawLetter(idx, x, y, s, ld, rand.nextInt(COLOR_NUM));
+        }
       }
       switch(d) {
       case Direction.TO_RIGHT:
-	x += s * LETTER_WIDTH;
-	break;
+        x += s * LETTER_WIDTH;
+        break;
       case Direction.TO_DOWN:
-	y += s * LETTER_WIDTH;
-	break;
+        y += s * LETTER_WIDTH;
+        break;
       case Direction.TO_LEFT:
-	x -= s * LETTER_WIDTH;
-	break;
+        x -= s * LETTER_WIDTH;
+        break;
       case Direction.TO_UP:
-	y -= s * LETTER_WIDTH;
-	break;
+        y -= s * LETTER_WIDTH;
+        break;
       }
     }
   }
@@ -159,17 +159,17 @@ public class LetterRender {
       drawLetter(n % 10, x, y, s, ld, cl);
       switch(d) {
       case Direction.TO_RIGHT:
-	x -= s * LETTER_WIDTH;
-	break;
+        x -= s * LETTER_WIDTH;
+        break;
       case Direction.TO_DOWN:
-	y -= s * LETTER_WIDTH;
-	break;
+        y -= s * LETTER_WIDTH;
+        break;
       case Direction.TO_LEFT:
-	x += s * LETTER_WIDTH;
-	break;
+        x += s * LETTER_WIDTH;
+        break;
       case Direction.TO_UP:
-	y += s * LETTER_WIDTH;
-	break;
+        y += s * LETTER_WIDTH;
+        break;
       }
       n /= 10;
       if (n <= 0) break;
@@ -184,7 +184,7 @@ public class LetterRender {
       dg = 3;
     else if (num < 10000)
       dg = 4;
-    else 
+    else
       dg = 5;
     float x = lx + LETTER_WIDTH * s * dg / 2;
     float y = ly + LETTER_HEIGHT * s / 2;
@@ -202,26 +202,26 @@ public class LetterRender {
     float x = lx;
     for (int i = 0; i < 7; i++) {
       if (i != 4) {
-	drawLetter(n % 10, x, y, s, Direction.TO_RIGHT, cl);
-	n /= 10;
+        drawLetter(n % 10, x, y, s, Direction.TO_RIGHT, cl);
+        n /= 10;
       } else {
-	drawLetter(n % 6, x, y, s, Direction.TO_RIGHT, cl);
-	n /= 6;
+        drawLetter(n % 6, x, y, s, Direction.TO_RIGHT, cl);
+        n /= 6;
       }
       if ((i & 1) == 1 || i == 0) {
-	switch (i) {
-	case 3:
-	  drawLetter(41, x + s * 1.16f, y, s, Direction.TO_RIGHT, cl);
-	  break;
-	case 5:
-	  drawLetter(40, x + s * 1.16f, y, s, Direction.TO_RIGHT, cl);
-	  break;
-	default:
-	  break;
-	}
-	x -= s * LETTER_WIDTH;
+        switch (i) {
+        case 3:
+          drawLetter(41, x + s * 1.16f, y, s, Direction.TO_RIGHT, cl);
+          break;
+        case 5:
+          drawLetter(40, x + s * 1.16f, y, s, Direction.TO_RIGHT, cl);
+          break;
+        default:
+          break;
+        }
+        x -= s * LETTER_WIDTH;
       } else {
-	x -= s * LETTER_WIDTH * 1.3f;
+        x -= s * LETTER_WIDTH * 1.3f;
       }
       if (n <= 0) break;
     }
@@ -235,8 +235,8 @@ public class LetterRender {
     glRotatef(deg, 0, 0, 1);
     glScalef(width, height, 0.3);
     glCallList(Tumiki.displayListIdx +
-	       col * Tumiki.SHAPE_NUM +
-	       LETTER_SHADE * Tumiki.COLOR_NUM * Tumiki.SHAPE_NUM);
+               col * Tumiki.SHAPE_NUM +
+               LETTER_SHADE * Tumiki.COLOR_NUM * Tumiki.SHAPE_NUM);
     glPopMatrix();
   }
 
@@ -246,29 +246,29 @@ public class LetterRender {
     for (int i = 0;; i++) {
       deg = cast(int) spData[idx][i][4];
       if (deg > 99990) break;
-      x = -spData[idx][i][0]; 
+      x = -spData[idx][i][0];
       y = -spData[idx][i][1];
-      size = spData[idx][i][2]; 
+      size = spData[idx][i][2];
       length = spData[idx][i][3];
       x *= 1.2f;
       y *= 0.9f;
       size *= 0.5f;
       length *= 0.7f;
       if (size > length) {
-	size *= 1.1f;
-	length *= 0.7f;
+        size *= 1.1f;
+        length *= 0.7f;
       } else {
-	size *= 0.7f;
-	length *= 1.1f;
+        size *= 0.7f;
+        length *= 1.1f;
       }
-      x = -x; 
+      x = -x;
       y = y;
       deg %= 180;
       deg += rand.nextSignedFloat(16);
       drawBox(x, y, size, length, deg, c);
-      /*if (deg <= 45 || deg > 135) 
-	drawBox(x, y, size, length);
-      else 
+      /*if (deg <= 45 || deg > 135)
+        drawBox(x, y, size, length);
+      else
       drawBox(x, y, length, size);*/
     }
   }
@@ -280,10 +280,10 @@ public class LetterRender {
     int di = displayListIdx;
     for (int j = 0; j < COLOR_NUM; j++) {
       for (int i = 0; i < LETTER_NUM; i++) {
-	glNewList(di, GL_COMPILE);
-	drawLetter(i, j);
-	glEndList();
-	di++;
+        glNewList(di, GL_COMPILE);
+        drawLetter(i, j);
+        glEndList();
+        di++;
       }
     }
   }
@@ -292,7 +292,7 @@ public class LetterRender {
     glDeleteLists(displayListIdx, DISPLAY_LIST_NUM);
   }
 
-  private static float[5][16][] spData = 
+  private static float[5][16][] spData =
     [[
      [0, 1.15f, 0.65f, 0.3f, 0],
      [-0.6f, 0.55f, 0.65f, 0.3f, 90], [0.6f, 0.55f, 0.65f, 0.3f, 90],

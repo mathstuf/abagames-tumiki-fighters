@@ -83,9 +83,9 @@ public class BulletActor: Actor {
     bullet.setStageManager(stageManager);
   }
 
-  private void start(float speedRank, int shape, int color, float size, 
-		     float xReverse, float yReverse,
-		     BulletTarget target, int type) {
+  private void start(float speedRank, int shape, int color, float size,
+                     float xReverse, float yReverse,
+                     BulletTarget target, int type) {
     isExist = true;
     isTop = false;
     isWait = false;
@@ -98,25 +98,25 @@ public class BulletActor: Actor {
     shouldBeRemoved = false;
   }
 
-  public void set(BulletMLRunner* runner, 
-		  float x, float y, float deg, float speed, 
-		  float rank, float speedRank,
-		  int shape, int color, float size, 
-		  float xReverse, float yReverse,
-		  BulletTarget target, int type,
-		  BulletMLParser *parser[], float[] ranks, float[] speeds,
-		  int morphNum, int morphIdx) {
+  public void set(BulletMLRunner* runner,
+                  float x, float y, float deg, float speed,
+                  float rank, float speedRank,
+                  int shape, int color, float size,
+                  float xReverse, float yReverse,
+                  BulletTarget target, int type,
+                  BulletMLParser *parser[], float[] ranks, float[] speeds,
+                  int morphNum, int morphIdx) {
     bullet.set(runner, x, y, deg, speed, rank);
     bullet.setMorph(parser, ranks, speeds, morphNum, morphIdx);
     isSimple = false;
     start(speedRank, shape, color, size, xReverse, yReverse, target, type);
   }
 
-  public void set(float x, float y, float deg, float speed, 
-		  float rank, float speedRank, 
-		  int shape, int color, float size, 
-		  float xReverse, float yReverse,
-		  BulletTarget target, int type) {
+  public void set(float x, float y, float deg, float speed,
+                  float rank, float speedRank,
+                  int shape, int color, float size,
+                  float xReverse, float yReverse,
+                  BulletTarget target, int type) {
     bullet.set(x, y, deg, speed, rank);
     bullet.morphNum = bullet.morphIdx = 0;
     isSimple = true;
@@ -167,7 +167,7 @@ public class BulletActor: Actor {
   public void removeForcedVisible() {
     if (isVisible) {
       particles.add(1, bullet.pos, bullet.deg, 0, bullet.speed * bullet.speedRank, 0.4,
-		    Particle.TypeName.SPARK);
+                    Particle.TypeName.SPARK);
       removeForced();
     }
   }
@@ -175,7 +175,7 @@ public class BulletActor: Actor {
   public void removeForcedVisibleEnemy() {
     if (isVisible && bullet.type == BulletInst.Type.ENEMY) {
       particles.add(1, bullet.pos, bullet.deg, 0, bullet.speed * bullet.speedRank, 0.4,
-		    Particle.TypeName.SPARK);
+                    Particle.TypeName.SPARK);
       removeForced();
     }
   }
@@ -196,10 +196,10 @@ public class BulletActor: Actor {
       sofsy -= bullet.pos.y;
       inab = bmvx * sofsx + bmvy * sofsy;
       if (inab >= 0 && inab <= inaa) {
-	hd = sofsx * sofsx + sofsy * sofsy - inab * inab / inaa;
-	if (hd >= 0 && hd <= SHIP_HIT_WIDTH) {
-	  ship.destroyed();
-	}
+        hd = sofsx * sofsx + sofsy * sofsy - inab * inab / inaa;
+        if (hd >= 0 && hd <= SHIP_HIT_WIDTH) {
+          ship.destroyed();
+        }
       }
     }
   }
@@ -212,70 +212,70 @@ public class BulletActor: Actor {
     ppos.y = bullet.pos.y;
     if (isTop) {
       bullet.deg = (atan2(tpos.x - bullet.pos.x, tpos.y - bullet.pos.y) * bullet.xReverse
-		    + PI / 2) * bullet.yReverse - PI / 2;
+                    + PI / 2) * bullet.yReverse - PI / 2;
     }
     if (isWait && waitCnt > 0) {
       waitCnt--;
       if (shouldBeRemoved)
-	removeForced();
+        removeForced();
       return;
     }
     if (!isSimple) {
       bullet.move();
       if (bullet.isEnd()) {
-	if (isTop) {
-	  rewind();
-	  if (isWait) {
-	    waitCnt = postWait;
-	    return;
-	  }
-	} else if (isMorphSeed) {
-	  removeForced();
-	  return;
-	}
+        if (isTop) {
+          rewind();
+          if (isWait) {
+            waitCnt = postWait;
+            return;
+          }
+        } else if (isMorphSeed) {
+          removeForced();
+          return;
+        }
       }
     }
     if (shouldBeRemoved) {
       removeForced();
       return;
     }
-    bullet.pos.x += 
+    bullet.pos.x +=
       (sin(bullet.deg) * bullet.speed + bullet.acc.x) * bullet.speedRank * bullet.xReverse;
-    bullet.pos.y += 
+    bullet.pos.y +=
       (cos(bullet.deg) * bullet.speed - bullet.acc.y) * bullet.speedRank * bullet.yReverse;
     if (isVisible) {
       switch (bullet.type) {
       case BulletInst.Type.ENEMY:
-	totalBulletsSpeed += bullet.speed * bullet.speedRank;
-	if (splinters.checkHit(bullet.pos)) {
-	  removeForcedVisible();
-	} else {
-	  StuckEnemy hse = ship.stuckEnemies.checkHitWithoutMyShip(bullet.pos);
-	  if (hse) {
-	    particles.add(3, bullet.pos, bullet.deg, 0.1, 
-			  bullet.speed * bullet.speedRank / 2, 0.6, 
-			  Particle.TypeName.SMOKE);
-	    particles.add(20, bullet.pos, 0, PI * 2, 3, 0.4, Particle.TypeName.SPARK);
-	    SoundManager.playSe(SoundManager.Se.STUCK_DESTROYED);
-	    ship.hitStuckEnemiesPart(hse);
-	    removeForced();
-	  } else {
-	    checkShipHit();
-	  }
-	}
-	break;
+        totalBulletsSpeed += bullet.speed * bullet.speedRank;
+        if (splinters.checkHit(bullet.pos)) {
+          removeForcedVisible();
+        } else {
+          StuckEnemy hse = ship.stuckEnemies.checkHitWithoutMyShip(bullet.pos);
+          if (hse) {
+            particles.add(3, bullet.pos, bullet.deg, 0.1,
+                          bullet.speed * bullet.speedRank / 2, 0.6,
+                          Particle.TypeName.SMOKE);
+            particles.add(20, bullet.pos, 0, PI * 2, 3, 0.4, Particle.TypeName.SPARK);
+            SoundManager.playSe(SoundManager.Se.STUCK_DESTROYED);
+            ship.hitStuckEnemiesPart(hse);
+            removeForced();
+          } else {
+            checkShipHit();
+          }
+        }
+        break;
       case BulletInst.Type.SHIP:
-	if (enemies.checkHit(bullet.pos, 1)) {
-	  particles.add(3, bullet.pos, bullet.deg, 0.1, bullet.speed * bullet.speedRank / 2, 0.5, 
-			Particle.TypeName.SMOKE);
-	  particles.add(3, bullet.pos, bullet.deg + PI, 1, bullet.speed * bullet.speedRank, 0.3, 
-			Particle.TypeName.SPARK);
-	  removeForced();
-	}
-	break;
+        if (enemies.checkHit(bullet.pos, 1)) {
+          particles.add(3, bullet.pos, bullet.deg, 0.1, bullet.speed * bullet.speedRank / 2, 0.5,
+                        Particle.TypeName.SMOKE);
+          particles.add(3, bullet.pos, bullet.deg + PI, 1, bullet.speed * bullet.speedRank, 0.3,
+                        Particle.TypeName.SPARK);
+          removeForced();
+        }
+        break;
       }
       if (field.checkHit(bullet.pos, FIELD_SPACE))
-	removeForced();
+        removeForced();
     }
     cnt++;
   }
@@ -308,9 +308,9 @@ public class BulletActor: Actor {
       s = 0;
       break;
     }
-    glCallList(Tumiki.displayListIdx + s + 
-	       (BULLET_COLOR + bullet.color) * Tumiki.SHAPE_NUM +
-	       BULLET_SHADE * Tumiki.COLOR_NUM * Tumiki.SHAPE_NUM);
+    glCallList(Tumiki.displayListIdx + s +
+               (BULLET_COLOR + bullet.color) * Tumiki.SHAPE_NUM +
+               BULLET_SHADE * Tumiki.COLOR_NUM * Tumiki.SHAPE_NUM);
     glPopMatrix();
   }
 }

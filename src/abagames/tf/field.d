@@ -84,15 +84,15 @@ public class Field {
     foreach (FieldLinePattern flp; pattern.line) {
       flp.cnt--;
       if (flp.cnt <= 0) {
-	FieldObj fo = cast(FieldObj) fieldObjs.getInstance();
-	if (fo) {
-	  TumikiSet ts = flp.tumikiSet[rand.nextInt(flp.tumikiSet.length)];
-	  if (flp.onGround)
-	    fo.setGround(ts, flp.z, pattern.scrollSpeed);
-	  else
-	    fo.setSky(ts, flp.z, pattern.scrollSpeed / 3 * 2, rand);
-	}
-	flp.cnt = flp.interval[rand.nextInt(flp.interval.length)];
+        FieldObj fo = cast(FieldObj) fieldObjs.getInstance();
+        if (fo) {
+          TumikiSet ts = flp.tumikiSet[rand.nextInt(flp.tumikiSet.length)];
+          if (flp.onGround)
+            fo.setGround(ts, flp.z, pattern.scrollSpeed);
+          else
+            fo.setSky(ts, flp.z, pattern.scrollSpeed / 3 * 2, rand);
+        }
+        flp.cnt = flp.interval[rand.nextInt(flp.interval.length)];
       }
     }
     mnx += pattern.scrollSpeed;
@@ -130,14 +130,14 @@ public class Field {
       float x2 = (backMountPos[idx + 1].x - mnx);
       float x3 = (backMountPos[idx + 2].x - mnx);
       if (x1 >= 640)
-	break;
+        break;
       if (x3 >= 0) {
-	Screen.setColor(pattern.mrr, pattern.mrg, pattern.mrb);
-	glVertex3f(x1, backMountPos[idx].y - groundY, 0);
-	Screen.setColor(pattern.mtr, pattern.mtg, pattern.mtb);
-	glVertex3f(x2, backMountPos[idx + 1].y - groundY, 0);
-	Screen.setColor(pattern.mrr, pattern.mrg, pattern.mrb);
-	glVertex3f(x3, backMountPos[idx + 2].y - groundY, 0);
+        Screen.setColor(pattern.mrr, pattern.mrg, pattern.mrb);
+        glVertex3f(x1, backMountPos[idx].y - groundY, 0);
+        Screen.setColor(pattern.mtr, pattern.mtg, pattern.mtb);
+        glVertex3f(x2, backMountPos[idx + 1].y - groundY, 0);
+        Screen.setColor(pattern.mrr, pattern.mrg, pattern.mrb);
+        glVertex3f(x3, backMountPos[idx + 2].y - groundY, 0);
       }
       idx += 2;
     }
@@ -151,15 +151,15 @@ public class Field {
   }
 
   public bool checkHit(Vector p, float space) {
-    if (p.x < -size.x + space || p.x > size.x - space || 
-	p.y < -size.y + space || p.y > size.y - space)
+    if (p.x < -size.x + space || p.x > size.x - space ||
+        p.y < -size.y + space || p.y > size.y - space)
       return true;
     return false;
   }
 
   public bool checkHit(Vector p, float xm, float xp, float ym, float yp) {
-    if (p.x < -size.x - xp || p.x > size.x - xm || 
-	p.y < -size.y - yp || p.y > size.y - ym)
+    if (p.x < -size.x - xp || p.x > size.x - xm ||
+        p.y < -size.y - yp || p.y > size.y - ym)
       return true;
     return false;
   }
@@ -250,7 +250,7 @@ public class FieldPattern {
   float mrr, mrg, mrb;
  private:
   static const char[] FIELD_DIR_NAME = "field";
-  
+
   // Initialize FieldPattern with the array.
   // randSeed, scrollSpeed,
   // [z, [interval], [TumikiSetName]]
@@ -267,27 +267,27 @@ public class FieldPattern {
     mrb = (bb * 2+ gb) / 3;
     for (;;) {
       if (!si.hasNext)
-	break;
+        break;
       float z = atof(si.next);
       FieldLinePattern flp = new FieldLinePattern;
       if (z > 0) {
-	flp.z = -z;
-	flp.onGround = true;
+        flp.z = -z;
+        flp.onGround = true;
       } else {
-	flp.z = z;
-	flp.onGround = false;
+        flp.z = z;
+        flp.onGround = false;
       }
       for (;;) {
-	char[] v = si.next;
-	if (v == "e")
-	  break;
-	flp.addInterval(atoi(v));
+        char[] v = si.next;
+        if (v == "e")
+          break;
+        flp.addInterval(atoi(v));
       }
       for (;;) {
-	char[] v = si.next;
-	if (v == "e")
-	  break;
-	flp.addTumikiSet(TumikiSet.getInstance(v));
+        char[] v = si.next;
+        if (v == "e")
+          break;
+        flp.addTumikiSet(TumikiSet.getInstance(v));
       }
       line ~= flp;
     }

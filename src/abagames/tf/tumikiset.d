@@ -32,16 +32,16 @@ public class TumikiSet {
   static const char[] TUMIKI_DIR_NAME = "tumiki";
   static const float BULLET_SPEED_RATIO = 1.2;
   static int[char[]] shapeStr;
-  static char[][] SHAPE_STR = 
+  static char[][] SHAPE_STR =
     ["s", "ul", "ur", "dr", "dl", "u", "r", "d", "l", "pu", "pdr", "pr", "pur", "pd", "pf"];
   static int[char[]] colorStr;
-  static char[][] COLOR_STR = 
+  static char[][] COLOR_STR =
     ["r", "g", "b", "y", "p", "a", "w", "gr"];
   static int[char[]] bulletShapeStr;
-  static char[][] BULLET_SHAPE_STR = 
+  static char[][] BULLET_SHAPE_STR =
     ["b", "a", "r"];
   static int[char[]] bulletColorStr;
-  static char[][] BULLET_COLOR_STR = 
+  static char[][] BULLET_COLOR_STR =
     ["r", "a", "p"];
 
   public static this() {
@@ -85,7 +85,7 @@ public class TumikiSet {
     fireScoreInterval = atoi(si.next);
     for (;;) {
       if (!si.hasNext)
-	break;
+        break;
       char[] v = si.next;
       int shape = shapeStr[v];
       v = si.next;
@@ -96,39 +96,39 @@ public class TumikiSet {
       float sizey = atof(si.next);
       Tumiki ti = new Tumiki(shape, color, x, y, sizex, sizey, sizeRatio);
       if (sizeXp < ti.ofs.x + ti.size.x)
-	sizeXp = ti.ofs.x + ti.size.x;
+        sizeXp = ti.ofs.x + ti.size.x;
       if (sizeXm > ti.ofs.x - ti.size.x)
-	sizeXm = ti.ofs.x - ti.size.x;
+        sizeXm = ti.ofs.x - ti.size.x;
       if (sizeYp < ti.ofs.y + ti.size.y)
-	sizeYp = ti.ofs.y + ti.size.y;
+        sizeYp = ti.ofs.y + ti.size.y;
       if (sizeYm > ti.ofs.y - ti.size.y)
-	sizeYm = ti.ofs.y - ti.size.y;
+        sizeYm = ti.ofs.y - ti.size.y;
       for (;;) {
-	v = si.next;
-	if (v == "e") {
-	  break;
-	} else if (v == "s") {
-	  ti.addBarrage(new Barrage);
-	  continue;
-	}
-	int shape = bulletShapeStr[v];
-	v = si.next;
-	int color = bulletColorStr[v];
-	float size = atof(si.next);
-	float yReverse = atof(si.next);
-	int prevWait = atoi(si.next);
-	int postWait = atoi(si.next);
-	Barrage br = new Barrage
-	  (shape, color, size, yReverse, prevWait, postWait);
-	for (;;) {
-	  char[] bml = si.next;
-	  if (bml == "e")
-	    break;
-	  float rank = atof(si.next);
-	  float speed = atof(si.next);
-	  br.addBml(bml, rank, speed * BULLET_SPEED_RATIO);
-	}
-	ti.addBarrage(br);
+        v = si.next;
+        if (v == "e") {
+          break;
+        } else if (v == "s") {
+          ti.addBarrage(new Barrage);
+          continue;
+        }
+        int shape = bulletShapeStr[v];
+        v = si.next;
+        int color = bulletColorStr[v];
+        float size = atof(si.next);
+        float yReverse = atof(si.next);
+        int prevWait = atoi(si.next);
+        int postWait = atoi(si.next);
+        Barrage br = new Barrage
+          (shape, color, size, yReverse, prevWait, postWait);
+        for (;;) {
+          char[] bml = si.next;
+          if (bml == "e")
+            break;
+          float rank = atof(si.next);
+          float speed = atof(si.next);
+          br.addBml(bml, rank, speed * BULLET_SPEED_RATIO);
+        }
+        ti.addBarrage(br);
       }
       tumiki ~= ti;
     }
@@ -152,15 +152,15 @@ public class TumikiSet {
   }
 
   public int addTopBullets(int barragePtnIdx, BulletActorPool bullets, EnemyTopBullet[] etb,
-			   BulletTarget target, int type) {
+                           BulletTarget target, int type) {
     int etbIdx = 0;
     foreach (Tumiki t; tumiki) {
       BulletActor ba = t.addTopBullet(barragePtnIdx, bullets, target, type);
       if (ba) {
-	etb[etbIdx].actor = ba;
-	etb[etbIdx].tumiki = t;
-	etb[etbIdx].deactivated = false;
-	etbIdx++;
+        etb[etbIdx].actor = ba;
+        etb[etbIdx].tumiki = t;
+        etb[etbIdx].deactivated = false;
+        etbIdx++;
       }
     }
     return etbIdx;
@@ -212,7 +212,7 @@ public class TumikiSet {
   public bool checkHit(Vector p, float x, float y) {
     foreach (Tumiki t; tumiki)
       if (t.checkHit(p, x, y))
-	return true;
+        return true;
     return false;
   }
 }

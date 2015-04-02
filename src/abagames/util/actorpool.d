@@ -30,9 +30,9 @@ public class ActorPool {
     for (int i = 0; i < actor.length; i++) {
       actorIdx--;
       if (actorIdx < 0)
-	actorIdx = actor.length - 1;
-      if (!actor[actorIdx].isExist) 
-	return actor[actorIdx];
+        actorIdx = actor.length - 1;
+      if (!actor[actorIdx].isExist)
+        return actor[actorIdx];
     }
     return null;
   }
@@ -47,14 +47,14 @@ public class ActorPool {
   public void move() {
     foreach (Actor ac; actor) {
       if (ac.isExist)
-	ac.move();
+        ac.move();
     }
   }
 
   public void draw() {
     foreach (Actor ac; actor) {
       if (ac.isExist)
-	ac.draw();
+        ac.draw();
     }
   }
 

@@ -85,7 +85,7 @@ public class Enemy: Actor {
     }
     for (int j = 0; j < partsNum - 1; j++)
       for (int i = j + 1; i < partsNum; i++)
-	parts[j].addCoverPart(parts[i]);
+        parts[j].addCoverPart(parts[i]);
     fireCnt = 0;
     attackFormIdx = 0;
     attackPtnIdx = 0;
@@ -94,7 +94,7 @@ public class Enemy: Actor {
     if (bm) {
       mv.moveBullet = bullets.addMoveBullet(bm.parser, bm.speed, x, y, bm.deg, ship);
       if (!mv.moveBullet)
-	return;
+        return;
     } else {
       mv.moveBullet = null;
       PointsMovePattern pm = cast(PointsMovePattern) mp;
@@ -125,7 +125,7 @@ public class Enemy: Actor {
     for (int i = 0 ; i < partsNum; i++) {
       EnemyPart p = parts[i];
       if (p.shield > 0)
-	p.breakIntoFragments(pos);
+        p.breakIntoFragments(pos);
     }
   }
 
@@ -144,21 +144,21 @@ public class Enemy: Actor {
     if (!mv.withdraw) {
       pt = mv.pattern.point[barragePtnIdx];
       if (!pt) {
-	pt = mv.pattern.point[PointsMovePattern.BASIC_PATTERN_IDX];
-	speed = mv.pattern.speed[PointsMovePattern.BASIC_PATTERN_IDX];
+        pt = mv.pattern.point[PointsMovePattern.BASIC_PATTERN_IDX];
+        speed = mv.pattern.speed[PointsMovePattern.BASIC_PATTERN_IDX];
       } else {
-	speed = mv.pattern.speed[barragePtnIdx];
+        speed = mv.pattern.speed[barragePtnIdx];
       }
       if (!mv.reachFirstPointFirst)
-	speed *= 3;
+        speed *= 3;
       else if (!mv.reachFirstPoint)
-	speed *= 2;
+        speed *= 2;
       if (mv.movePointIdx >= pt.length)
-	mv.movePointIdx = 0;
+        mv.movePointIdx = 0;
       aim = pt[mv.movePointIdx];
       if (cnt >= mv.pattern.withdrawCnt) {
-	mv.withdraw = true;
-	mv.onRoute = false;
+        mv.withdraw = true;
+        mv.onRoute = false;
       }
     }
     if (mv.withdraw) {
@@ -173,7 +173,7 @@ public class Enemy: Actor {
     float od = d - mv.deg;
     if (od > PI)
       od -= PI * 2;
-    else if (od < -PI) 
+    else if (od < -PI)
       od += PI * 2;
     float aod = fabs(od);
     if (aod < BOSS_MOVE_DEG) {
@@ -181,35 +181,35 @@ public class Enemy: Actor {
     } else if (od > 0) {
       mv.deg += BOSS_MOVE_DEG;
       if (mv.deg >= std.math.PI * 2)
-	mv.deg -= PI * 2;
+        mv.deg -= PI * 2;
     } else {
       mv.deg -= BOSS_MOVE_DEG;
       if (mv.deg < 0)
-	mv.deg += PI * 2;
+        mv.deg += PI * 2;
     }
     pos.x += sin(mv.deg) * speed;
     pos.y += cos(mv.deg) * speed;
     if (!mv.onRoute) {
       if (aod < PI / 2) {
-	mv.onRoute = true;
+        mv.onRoute = true;
       }
     } else {
       if (aod > PI / 2) {
-	if (mv.withdraw) {
-	  remove();
-	  return;
-	}
-	if (isBoss && !mv.reachFirstPointFirst)
-	  manager.bossInAttack(mv.pattern.withdrawCnt);
-	mv.reachFirstPoint = mv.reachFirstPointFirst = true;
-	mv.onRoute = false;
-	mv.movePointIdx++;
-	if (mv.movePointIdx >= pt.length)
-	  mv.movePointIdx = 0;
+        if (mv.withdraw) {
+          remove();
+          return;
+        }
+        if (isBoss && !mv.reachFirstPointFirst)
+          manager.bossInAttack(mv.pattern.withdrawCnt);
+        mv.reachFirstPoint = mv.reachFirstPointFirst = true;
+        mv.onRoute = false;
+        mv.movePointIdx++;
+        if (mv.movePointIdx >= pt.length)
+          mv.movePointIdx = 0;
       }
     }
   }
-  
+
   private void addTopBullets() {
     for (int i = 0 ; i < partsNum; i++)
       parts[i].addTopBullets(barragePtnIdx);
@@ -229,18 +229,18 @@ public class Enemy: Actor {
   private void checkWoundedParts() {
     for (int i = 0 ; i < partsNum; i++) {
       if (parts[i].shield > 0) {
-	EnemyPart ep = parts[i];
-	ep.wounded = false;
-	if (ep.shield < ep.firstShield / 2) {
-	  if ((cnt & 15) < 3)
-	    ep.wounded = true;
-	} else if (ep.shield < ep.firstShield / 3) {
-	  if ((cnt & 7) < 3)
-	    ep.wounded = true;
-	} else if (ep.shield < ep.firstShield / 4) {
-	  if ((cnt & 3) < 3)
-	    ep.wounded = true;
-	}
+        EnemyPart ep = parts[i];
+        ep.wounded = false;
+        if (ep.shield < ep.firstShield / 2) {
+          if ((cnt & 15) < 3)
+            ep.wounded = true;
+        } else if (ep.shield < ep.firstShield / 3) {
+          if ((cnt & 7) < 3)
+            ep.wounded = true;
+        } else if (ep.shield < ep.firstShield / 4) {
+          if ((cnt & 3) < 3)
+            ep.wounded = true;
+        }
       }
     }
   }
@@ -249,17 +249,17 @@ public class Enemy: Actor {
     if (mv.moveBullet) {
       pos.x = mv.moveBullet.bullet.pos.x;
       pos.y = mv.moveBullet.bullet.pos.y;
-      if (field.checkHit(pos, 
-			 spec.sizeXm * 2, spec.sizeXp * 2, spec.sizeYm * 2, spec.sizeYp * 2)) {
-	remove();
-	return;
+      if (field.checkHit(pos,
+                         spec.sizeXm * 2, spec.sizeXp * 2, spec.sizeYm * 2, spec.sizeYp * 2)) {
+        remove();
+        return;
       }
     } else {
       movePointsMove();
       if (!mv.reachFirstPoint) {
-	cnt++;
-	totalNum++;
-	return;
+        cnt++;
+        totalNum++;
+        return;
       }
     }
     fireCnt--;
@@ -270,10 +270,10 @@ public class Enemy: Actor {
       addTopBullets();
       attackPtnIdx++;
       if (attackPtnIdx >= af.attackPeriod.length)
-	attackPtnIdx = 0;
+        attackPtnIdx = 0;
       if (!mv.moveBullet) {
-	if (mv.pattern.point[barragePtnIdx])
-	  movePatternChanged();
+        if (mv.pattern.point[barragePtnIdx])
+          movePatternChanged();
       }
     } else if (fireCnt < af.breakPeriod[attackPtnIdx]) {
       removeTopBullets();
@@ -289,11 +289,11 @@ public class Enemy: Actor {
     for (int i = 0 ; i < partsNum; i++) {
       EnemyPart p = parts[i];
       if (p.shield > 0)
-	p.draw(pos, z);
+        p.draw(pos, z);
       if (i == 0)
-	z += 0.2;
+        z += 0.2;
       else
-	z += 0.05;
+        z += 0.05;
     }
   }
 
@@ -307,10 +307,10 @@ public class Enemy: Actor {
     removeTopBullets();
     foreach (EnemyPart ep; parts) {
       if (ep.shield > 0)
-	if (ep.spec.destroyedFormIdx >= 0 && attackFormIdx >= ep.spec.destroyedFormIdx) {
-	  ep.breakIntoFragments(pos);
-	  ep.remove();
-	}
+        if (ep.spec.destroyedFormIdx >= 0 && attackFormIdx >= ep.spec.destroyedFormIdx) {
+          ep.breakIntoFragments(pos);
+          ep.remove();
+        }
     }
     particles.add(8, pos, 0, PI * 2, 0.3, 3, Particle.TypeName.SMOKE);
     SoundManager.playSe(SoundManager.Se.ENEMY_DESTROYED);
@@ -326,44 +326,44 @@ public class Enemy: Actor {
     for (int i = 0 ; i < partsNum; i++) {
       EnemyPart ep = parts[i];
       if (ep.checkHit(p, dm, pos)) {
-	if (ep.shield <= 0) {
-	  if (ep.spec.damageToMainBody > 0) {
-	    parts[0].shield -= ep.spec.damageToMainBody;
-	    particles.add(5, pos, 0, PI * 2, 0.1, parts[0].spec.size / 4, Particle.TypeName.SMOKE);
-	  }
-	  manager.addScore(ep.spec.tumikiSet.score, p);
-	  if (ep.firstShield <= 1)
-	    SoundManager.playSe(SoundManager.Se.SMALL_ENEMY_DESTROYED);
-	  else
-	    SoundManager.playSe(SoundManager.Se.ENEMY_DESTROYED);
-	  ep.remove();
-	  particles.add(8, p, 0, PI * 2, 1, 0.5, Particle.TypeName.SPARK);
-	  Splinter sp = cast(Splinter) splinters.getInstance();
-	  if (sp) {
-	    bool bs = isBoss;
-	    if (i != 0)
-	      bs = false;
-	    sp.set
-	      (pos.x + ep.spec.ofs.x, pos.y + ep.spec.ofs.y, ep.spec.tumikiSet, barragePtnIdx, bs);
-	  }
-	  if (parts[0].shield <= 0) {
-	    if (i != 0)
-	      parts[0].spec.tumikiSet.breakIntoFragments(fragments, pos, 0);
-	    breakIntoFragments();
-	    if (isBoss) {
-	      int sc = manager.bossDestroyed();
-	      manager.addScore(sc, p);
-	    }
-	    remove();
-	  } else {
-	    for (int j = 0; j < i; j++)
-	      parts[j].activateCoveredTopBullets(barragePtnIdx);
-	  }
-	}
-	setTopBulletsPos();
-	checkAttackFormChange();
-	gauge.add(ep);
-	return true;
+        if (ep.shield <= 0) {
+          if (ep.spec.damageToMainBody > 0) {
+            parts[0].shield -= ep.spec.damageToMainBody;
+            particles.add(5, pos, 0, PI * 2, 0.1, parts[0].spec.size / 4, Particle.TypeName.SMOKE);
+          }
+          manager.addScore(ep.spec.tumikiSet.score, p);
+          if (ep.firstShield <= 1)
+            SoundManager.playSe(SoundManager.Se.SMALL_ENEMY_DESTROYED);
+          else
+            SoundManager.playSe(SoundManager.Se.ENEMY_DESTROYED);
+          ep.remove();
+          particles.add(8, p, 0, PI * 2, 1, 0.5, Particle.TypeName.SPARK);
+          Splinter sp = cast(Splinter) splinters.getInstance();
+          if (sp) {
+            bool bs = isBoss;
+            if (i != 0)
+              bs = false;
+            sp.set
+              (pos.x + ep.spec.ofs.x, pos.y + ep.spec.ofs.y, ep.spec.tumikiSet, barragePtnIdx, bs);
+          }
+          if (parts[0].shield <= 0) {
+            if (i != 0)
+              parts[0].spec.tumikiSet.breakIntoFragments(fragments, pos, 0);
+            breakIntoFragments();
+            if (isBoss) {
+              int sc = manager.bossDestroyed();
+              manager.addScore(sc, p);
+            }
+            remove();
+          } else {
+            for (int j = 0; j < i; j++)
+              parts[j].activateCoveredTopBullets(barragePtnIdx);
+          }
+        }
+        setTopBulletsPos();
+        checkAttackFormChange();
+        gauge.add(ep);
+        return true;
       }
     }
     return false;
@@ -382,8 +382,8 @@ public class EnemyInitializer: ActorInitializer {
   DamageGauge gauge;
 
   public this(GameManager manager, Field field, BulletActorPool bullets, Ship ship,
-	      SplinterPool splinters, ParticlePool particles, ActorPool fragments,
-	      DamageGauge gauge) {
+              SplinterPool splinters, ParticlePool particles, ActorPool fragments,
+              DamageGauge gauge) {
     this.manager = manager;
     this.field = field;
     this.bullets = bullets;
@@ -406,9 +406,9 @@ public class EnemyPool: ActorPool {
   public bool checkHit(Vector pos, float damage) {
     foreach (Actor ac; actor) {
       if (ac.isExist) {
-	Enemy en = cast(Enemy) ac;
-	if (en.checkHit(pos, damage))
-	  return true;
+        Enemy en = cast(Enemy) ac;
+        if (en.checkHit(pos, damage))
+          return true;
       }
     }
     return false;
@@ -453,7 +453,7 @@ public class EnemyPart {
     removeTopBullets();
     shield = -1;
   }
-  
+
   public void addTopBullets(int barragePtnIdx) {
     if (shield <= 0)
       return;
@@ -470,10 +470,10 @@ public class EnemyPart {
     for (int i = 0 ; i < topBulletNum; i++) {
       EnemyTopBullet etb = topBullet[i];
       if (etb.deactivated) {
-	etb.actor = etb.tumiki.addTopBullet
-	  (barragePtnIdx, bullets, target, BulletInst.Type.ENEMY);
-	etb.deactivated = false;
-	etb.coverChecked = false;
+        etb.actor = etb.tumiki.addTopBullet
+          (barragePtnIdx, bullets, target, BulletInst.Type.ENEMY);
+        etb.deactivated = false;
+        etb.coverChecked = false;
       }
     }
   }
@@ -481,8 +481,8 @@ public class EnemyPart {
   public void removeTopBullets() {
     for (int i = 0 ; i < topBulletNum; i++)
       if (topBullet[i].actor) {
-	topBullet[i].actor.removeForced();
-	topBullet[i].actor = null;
+        topBullet[i].actor.removeForced();
+        topBullet[i].actor = null;
       }
   }
 
@@ -492,21 +492,21 @@ public class EnemyPart {
     for (int i = 0 ; i < topBulletNum; i++) {
       EnemyTopBullet etb = topBullet[i];
       if (etb.actor) {
-	float ofsx = spec.ofs.x + etb.tumiki.ofs.x;
-	float ofsy = spec.ofs.y + etb.tumiki.ofs.y;
-	etb.actor.bullet.pos.x = x + ofsx;
-	etb.actor.bullet.pos.y = y + ofsy;
-	if (coverPartsNum > 0 && !etb.coverChecked) {
-	  for (int i = 0; i < coverPartsNum; i++) {
-	    if (coverParts[i].shield > 0 && coverParts[i].covers(ofsx, ofsy)) {
-	      etb.actor.removeForced();
-	      etb.actor = null;
-	      etb.deactivated = true;
-	      break;
-	    }
-	  }
-	  etb.coverChecked = true;
-	}
+        float ofsx = spec.ofs.x + etb.tumiki.ofs.x;
+        float ofsy = spec.ofs.y + etb.tumiki.ofs.y;
+        etb.actor.bullet.pos.x = x + ofsx;
+        etb.actor.bullet.pos.y = y + ofsy;
+        if (coverPartsNum > 0 && !etb.coverChecked) {
+          for (int i = 0; i < coverPartsNum; i++) {
+            if (coverParts[i].shield > 0 && coverParts[i].covers(ofsx, ofsy)) {
+              etb.actor.removeForced();
+              etb.actor = null;
+              etb.deactivated = true;
+              break;
+            }
+          }
+          etb.coverChecked = true;
+        }
       }
     }
   }
@@ -515,12 +515,12 @@ public class EnemyPart {
     coverParts[coverPartsNum] = part;
     coverPartsNum++;
   }
-  
+
   public bool covers(float x, float y) {
     float ox = x - spec.ofs.x;
     float oy = y - spec.ofs.y;
     if (spec.tumikiSet.sizeXm <= ox && ox <= spec.tumikiSet.sizeXp &&
-	spec.tumikiSet.sizeYm <= oy && oy <= spec.tumikiSet.sizeYp)
+        spec.tumikiSet.sizeYm <= oy && oy <= spec.tumikiSet.sizeYp)
       return true;
     else
       return false;

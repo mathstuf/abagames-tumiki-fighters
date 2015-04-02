@@ -46,7 +46,7 @@ public class MobileLetter: Actor {
   }
 
   public void set(float px, float py, float rx, float ry,
-		  float l, int st, int cl, float si, int cn) {
+                  float l, int st, int cl, float si, int cn) {
     pos.x = px;
     pos.y = py;
     root.x = rx;
@@ -72,7 +72,7 @@ public class MobileLetter: Actor {
       deg *= 0.95;
       pos.y -= 3;
       if (pos.y < root.y - size * LetterRender.LETTER_HEIGHT)
-	isExist = false;
+        isExist = false;
       return;
     }
     pos.add(vel);
@@ -100,7 +100,7 @@ public class MobileLetterPool: ActorPool {
  private:
   Field field;
   Rand rand;
-  
+
   public this(int n, ActorInitializer ini, Field f) {
     field = f;
     auto MobileLetter mlClass = new MobileLetter;
@@ -115,12 +115,12 @@ public class MobileLetterPool: ActorPool {
     foreach (char c; str) {
       MobileLetter ml = cast(MobileLetter) getInstance();
       if (!ml)
-	return;
+        return;
       if (c != ' ') {
-	int idx = LetterRender.convertCharToInt(c);
-	if (col < 0)
-	  color = rand.nextInt(LetterRender.COLOR_NUM);
-	ml.set(x, field.size.y, x, field.size.y, lgt, idx, color, size, cnt);
+        int idx = LetterRender.convertCharToInt(c);
+        if (col < 0)
+          color = rand.nextInt(LetterRender.COLOR_NUM);
+        ml.set(x, field.size.y, x, field.size.y, lgt, idx, color, size, cnt);
       }
       x += LetterRender.LETTER_WIDTH * size;
     }

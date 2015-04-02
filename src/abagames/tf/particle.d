@@ -84,9 +84,9 @@ public class Particle: Actor {
       break;
     case TypeName.SPARK:
       if (cnt & 1 == 0)
-	Screen.setColor(1, 0.4, 0.2, alpha);
+        Screen.setColor(1, 0.4, 0.2, alpha);
       else
-	Screen.setColor(1, 1, 0.1, alpha);
+        Screen.setColor(1, 1, 0.1, alpha);
       break;
     }
     glVertex3f(pos.x - size, pos.y - size, 0);
@@ -101,7 +101,7 @@ public class ParticleInitializer: ActorInitializer {
 
 public class ParticlePool: ActorPool {
  private:
-  
+
   public this(int n, ActorInitializer ini) {
     auto Particle particleClass = new Particle;
     super(n, particleClass, ini);

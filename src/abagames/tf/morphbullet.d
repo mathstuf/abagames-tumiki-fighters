@@ -20,7 +20,7 @@ public class MorphBullet: Bullet {
   int morphNum;
   int morphIdx;
  private:
-  
+
   public this(int id) {
     super(id);
   }

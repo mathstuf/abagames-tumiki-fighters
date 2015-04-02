@@ -75,7 +75,7 @@ public class Ship: BulletTarget {
   }
 
   public void init(Pad pad, Field field, ParticlePool particles, ActorPool fragments,
-		   GameManager manager) {
+                   GameManager manager) {
     this.pad = pad;
     this.field = field;
     this.particles = particles;
@@ -186,7 +186,7 @@ public class Ship: BulletTarget {
       bullets.clearVisibleEnemy();
     if (cnt < -INVINCIBLE_CNT) {
       if (cnt > -RESPAWN_CNT)
-	pos.x += RESPAWN_MOVE;
+        pos.x += RESPAWN_MOVE;
       return;
     }
     if (cnt == 0)
@@ -222,23 +222,23 @@ public class Ship: BulletTarget {
       fireCnt = FIRE_INTERVAL + 1;
       int eidx = tumikiSet.addTopBullets(0, bullets, etb, target, BulletInst.Type.SHIP);
       if (eidx > 0) {
-	etb[0].actor.unsetTop();
-	etb[0].actor.setMorphSeed();
-	etb[0].actor.bullet.pos.x = pos.x;
-	etb[0].actor.bullet.pos.y = pos.y;
-	etb[0].actor.bullet.deg = -deg - PI / 2;
-	SoundManager.playSe(SoundManager.Se.SHIP_SHOT);
+        etb[0].actor.unsetTop();
+        etb[0].actor.setMorphSeed();
+        etb[0].actor.bullet.pos.x = pos.x;
+        etb[0].actor.bullet.pos.y = pos.y;
+        etb[0].actor.bullet.deg = -deg - PI / 2;
+        SoundManager.playSe(SoundManager.Se.SHIP_SHOT);
       }
     }
     if (btn & Pad.PAD_BUTTON2) {
       speed += (SLOW_SPEED - speed) * 0.2;
       if (manager.mode == GameManager.Mode.EXTRA)
-	stuckEnemies.pullIn();
+        stuckEnemies.pullIn();
     } else {
       speed += (BASE_SPEED - speed) * 0.2;
       deg += (vel.y * BANK_BASE - deg) * 0.05;
       if (manager.mode == GameManager.Mode.EXTRA)
-	stuckEnemies.pushOut();
+        stuckEnemies.pushOut();
     }
     if (fireCnt > 0)
       fireCnt--;
@@ -248,20 +248,20 @@ public class Ship: BulletTarget {
   public void startMove() {
     if (startCnt < 120) {
       if (startCnt < 80)
-	smx += 0.003;
+        smx += 0.003;
       else
-	smx -= 0.006;
+        smx -= 0.006;
       pos.x += smx;
       if (startCnt < 60)
-	particles.add(1, pos, PI / 2 + 0.2, 0.4, startCnt * 0.02, 0.5, Particle.TypeName.SMOKE);
+        particles.add(1, pos, PI / 2 + 0.2, 0.4, startCnt * 0.02, 0.5, Particle.TypeName.SMOKE);
     }
     if (startCnt > 60 && startCnt < 180) {
       if (startCnt == 61)
-	SoundManager.playSe(SoundManager.Se.PROPELLER);
+        SoundManager.playSe(SoundManager.Se.PROPELLER);
       if (startCnt < 140)
-	smy += 0.003;
+        smy += 0.003;
       else
-	smy -= 0.006;
+        smy -= 0.006;
       pos.y += smy;
       groundY -= 1;
       field.setGroundY(groundY);
@@ -271,7 +271,7 @@ public class Ship: BulletTarget {
       pos.x -= 0.1;
       deg -= 0.0026;
       if (startCnt > 256) {
-	manager.setInGame();
+        manager.setInGame();
       }
     }
     startCnt++;
@@ -302,12 +302,12 @@ public class Ship: BulletTarget {
       btnPrsd = true;
     } else {
       if (pad.getButtonState() & (Pad.PAD_BUTTON1 | Pad.PAD_BUTTON2)) {
-	if (!btnPrsd) {
-	  manager.startGameover();
-	  return;
-	}
+        if (!btnPrsd) {
+          manager.startGameover();
+          return;
+        }
       } else {
-	btnPrsd = false;
+        btnPrsd = false;
       }
     }
     if (endCnt > 700) {
@@ -316,15 +316,15 @@ public class Ship: BulletTarget {
     } else if (endCnt > 620) {
       endMove();
       foreach (Vector fp; friendPos)
-	fp.x += BASE_SPEED * 2;
+        fp.x += BASE_SPEED * 2;
     }
     endCnt++;
     if (endCnt < 220) {
       foreach (Vector fp; friendPos)
-	fp.y -= 0.05;
+        fp.y -= 0.05;
     } else if (endCnt < 330) {
       foreach (Vector fp; friendPos)
-	fp.y -= 0.02;
+        fp.y -= 0.02;
     }
   }
 

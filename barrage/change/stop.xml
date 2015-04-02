@@ -5,10 +5,10 @@
           xmlns="http://www.asahi-net.or.jp/~cs8k-cyu/bulletml">
 
 <action label="top">
-	<changeSpeed>
-		<speed>0</speed>
-		<term>1</term>
-	</changeSpeed>
+ <changeSpeed>
+  <speed>0</speed>
+  <term>1</term>
+ </changeSpeed>
 </action>
 
 </bulletml>

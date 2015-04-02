@@ -25,13 +25,13 @@ public class BarrageManager {
     foreach (char[] dirName; dirs) {
       char[][] files = listdir(BARRAGE_DIR_NAME ~ "/" ~ dirName);
       foreach (char[] fileName; files) {
-	if (getExt(fileName) != "xml")
-	  continue;
-	char[] barrageName = dirName ~ "/" ~ fileName;
-	Logger.info("Load BulletML: " ~ barrageName);
-	parser[barrageName] = 
-	  BulletMLParserTinyXML_new(std.string.toStringz(BARRAGE_DIR_NAME ~ "/" ~ barrageName));
-	BulletMLParserTinyXML_parse(parser[barrageName]);
+        if (getExt(fileName) != "xml")
+          continue;
+        char[] barrageName = dirName ~ "/" ~ fileName;
+        Logger.info("Load BulletML: " ~ barrageName);
+        parser[barrageName] =
+          BulletMLParserTinyXML_new(std.string.toStringz(BARRAGE_DIR_NAME ~ "/" ~ barrageName));
+        BulletMLParserTinyXML_parse(parser[barrageName]);
       }
     }
   }

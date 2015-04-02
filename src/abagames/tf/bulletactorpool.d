@@ -56,15 +56,15 @@ public class BulletActorPool: ActorPool, BulletsManager {
       BulletMLRunner *runner = BulletMLRunner_new_parser(rb.parser[nmi]);
       BulletActorPool.registFunctions(runner);
       ba.set(runner, Bullet.now.pos.x, Bullet.now.pos.y, deg, speed,
-	     rb.ranks[nmi], rb.speeds[nmi],
-	     rb.shape, rb.color, rb.bulletSize, rb.xReverse, rb.yReverse, rb.target, rb.type,
-	     rb.parser, rb.ranks, rb.speeds, rb.morphNum, nmi);
+             rb.ranks[nmi], rb.speeds[nmi],
+             rb.shape, rb.color, rb.bulletSize, rb.xReverse, rb.yReverse, rb.target, rb.type,
+             rb.parser, rb.ranks, rb.speeds, rb.morphNum, nmi);
       ba.setMorphSeed();
     } else {
       nmi--;
-      ba.set(Bullet.now.pos.x, Bullet.now.pos.y, deg, speed, 
-	     rb.ranks[nmi], rb.speeds[nmi],
-	     rb.shape, rb.color, rb.bulletSize, rb.xReverse, rb.yReverse, rb.target, rb.type);
+      ba.set(Bullet.now.pos.x, Bullet.now.pos.y, deg, speed,
+             rb.ranks[nmi], rb.speeds[nmi],
+             rb.shape, rb.color, rb.bulletSize, rb.xReverse, rb.yReverse, rb.target, rb.type);
     }
   }
 
@@ -77,44 +77,44 @@ public class BulletActorPool: ActorPool, BulletsManager {
       return;
     BulletMLRunner* runner = BulletMLRunner_new_state(state);
     registFunctions(runner);
-    ba.set(runner, Bullet.now.pos.x, Bullet.now.pos.y, deg, speed, 
-	   rb.ranks[rb.morphIdx], rb.speeds[rb.morphIdx],
-	   rb.shape, rb.color, rb.bulletSize, rb.xReverse, rb.yReverse, rb.target, rb.type,
-	   rb.parser, rb.ranks, rb.speeds, rb.morphNum, rb.morphIdx);
+    ba.set(runner, Bullet.now.pos.x, Bullet.now.pos.y, deg, speed,
+           rb.ranks[rb.morphIdx], rb.speeds[rb.morphIdx],
+           rb.shape, rb.color, rb.bulletSize, rb.xReverse, rb.yReverse, rb.target, rb.type,
+           rb.parser, rb.ranks, rb.speeds, rb.morphNum, rb.morphIdx);
   }
 
   public BulletActor addTopBullet(BulletMLParser *parser[],
-				  float[] ranks, float[] speeds,
-				  float x, float y, float deg, float speed,
-				  int shape, int color, float size, 
-				  float xReverse, float yReverse,
-				  BulletTarget target, int type,
-				  int prevWait, int postWait) {
+                                  float[] ranks, float[] speeds,
+                                  float x, float y, float deg, float speed,
+                                  int shape, int color, float size,
+                                  float xReverse, float yReverse,
+                                  BulletTarget target, int type,
+                                  int prevWait, int postWait) {
     BulletMLRunner *runner = BulletMLRunner_new_parser(parser[0]);
     BulletActorPool.registFunctions(runner);
     BulletActor ba = cast(BulletActor) getInstance();
     if (!ba)
       return null;
-    ba.set(runner, x, y, deg, speed, 
-	   ranks[0], speeds[0], 
-	   shape, color, size, xReverse, yReverse, target, type,
-	   parser, ranks, speeds, parser.length, 0);
+    ba.set(runner, x, y, deg, speed,
+           ranks[0], speeds[0],
+           shape, color, size, xReverse, yReverse, target, type,
+           parser, ranks, speeds, parser.length, 0);
     ba.setWait(prevWait, postWait);
     ba.setTop();
     return ba;
   }
 
   public BulletActor addMoveBullet(BulletMLParser *parser, float speed,
-				   float x, float y, float deg, BulletTarget target) {
+                                   float x, float y, float deg, BulletTarget target) {
     BulletMLRunner *runner = BulletMLRunner_new_parser(parser);
     BulletActorPool.registFunctions(runner);
     BulletActor ba = cast(BulletActor) getInstance();
     if (!ba)
       return null;
-    ba.set(runner, x, y, deg, 0, 
-	   0, speed,
-	   0, 0, 0, 1, 1, target, BulletInst.Type.MOVE,
-	   null, null, null, 0, 0);
+    ba.set(runner, x, y, deg, 0,
+           0, speed,
+           0, 0, 0, 1, 1, target, BulletInst.Type.MOVE,
+           null, null, null, 0, 0);
     ba.setInvisible();
     return ba;
   }
@@ -127,25 +127,25 @@ public class BulletActorPool: ActorPool, BulletsManager {
   public void drawShots() {
     foreach (Actor ac; actor)
       if (ac.isExist) {
-	BulletActor ba = cast(BulletActor) ac;
-	if (ba.bullet.type == BulletInst.Type.SHIP)
-	  ac.draw();
+        BulletActor ba = cast(BulletActor) ac;
+        if (ba.bullet.type == BulletInst.Type.SHIP)
+          ac.draw();
       }
   }
 
   public void drawBullets() {
     foreach (Actor ac; actor)
       if (ac.isExist) {
-	BulletActor ba = cast(BulletActor) ac;
-	if (ba.bullet.type == BulletInst.Type.ENEMY)
-	  ac.draw();
+        BulletActor ba = cast(BulletActor) ac;
+        if (ba.bullet.type == BulletInst.Type.ENEMY)
+          ac.draw();
       }
   }
 
   public int getTurn() {
     return cnt;
   }
-  
+
   public void killMe(Bullet bullet) {
     assert((cast(BulletActor) actor[bullet.id]).bullet.id == bullet.id);
     (cast(BulletActor) actor[bullet.id]).remove();
@@ -154,21 +154,21 @@ public class BulletActorPool: ActorPool, BulletsManager {
   public override void clear() {
     foreach (Actor ac; actor) {
       if (ac.isExist)
-	(cast(BulletActor) ac).removeForced();
+        (cast(BulletActor) ac).removeForced();
     }
   }
 
   public void clearVisible() {
     foreach (Actor ac; actor) {
       if (ac.isExist)
-	(cast(BulletActor) ac).removeForcedVisible();
+        (cast(BulletActor) ac).removeForcedVisible();
     }
   }
 
   public void clearVisibleEnemy() {
     foreach (Actor ac; actor) {
       if (ac.isExist)
-	(cast(BulletActor) ac).removeForcedVisibleEnemy();
+        (cast(BulletActor) ac).removeForcedVisibleEnemy();
     }
   }
 
@@ -176,10 +176,10 @@ public class BulletActorPool: ActorPool, BulletsManager {
     se.setWideCollision();
     foreach (Actor ac; actor) {
       if (ac.isExist) {
-	BulletActor ba = cast(BulletActor) ac;
-	if (se.checkHit(ba.bullet.pos)) {
-	  ba.removeForcedVisible();
-	}
+        BulletActor ba = cast(BulletActor) ac;
+        if (se.checkHit(ba.bullet.pos)) {
+          ba.removeForcedVisible();
+        }
       }
     }
   }

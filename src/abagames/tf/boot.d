@@ -35,14 +35,14 @@ private void parseArgs(char[][] args) {
     switch (args[i]) {
     case "-brightness":
       if (i >= args.length - 1) {
-	usage(args[0]);
-	throw new Exception("Invalid options");
+        usage(args[0]);
+        throw new Exception("Invalid options");
       }
       i++;
       float b = cast(float) atoi(args[i]) / 100;
       if (b < 0 || b > 1) {
-	usage(args[0]);
-	throw new Exception("Invalid options");
+        usage(args[0]);
+        throw new Exception("Invalid options");
       }
       Screen.brightness = b;
       break;
@@ -51,8 +51,8 @@ private void parseArgs(char[][] args) {
       break;
     case "-res":
       if (i >= args.length - 2) {
-	usage(args[0]);
-	throw new Exception("Invalid options");
+        usage(args[0]);
+        throw new Exception("Invalid options");
       }
       i++;
       int w = atoi(args[i]);
@@ -108,11 +108,11 @@ extern (C) void _moduleCtor();
 
 extern (Windows)
 public int WinMain(HINSTANCE hInstance,
-	    HINSTANCE hPrevInstance,
-	    LPSTR lpCmdLine,
-	    int nCmdShow) {
+            HINSTANCE hPrevInstance,
+            LPSTR lpCmdLine,
+            int nCmdShow) {
   int result;
-  
+
   gc_init();
   _minit();
   try {

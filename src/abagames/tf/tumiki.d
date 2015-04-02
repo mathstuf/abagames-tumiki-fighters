@@ -35,13 +35,13 @@ public class Tumiki {
   private final const float CHECK_HIT_SIZE_RETIO = 0.7;
 
   public this(int shape, int color,
-	      float x, float y, float sx, float sy, float sizeRatio) {
+              float x, float y, float sx, float sy, float sizeRatio) {
     this.shape = shape;
     this.color = color;
     ofs = new Vector(x * sizeRatio, y * sizeRatio);
     size = new Vector(sx * sizeRatio * 0.5 - 0.15, sy * sizeRatio * 0.5 - 0.15);
-    checkHitSize = new Vector(size.x + CHECK_HIT_SIZE_RETIO, 
-			      size.y + CHECK_HIT_SIZE_RETIO);
+    checkHitSize = new Vector(size.x + CHECK_HIT_SIZE_RETIO,
+                              size.y + CHECK_HIT_SIZE_RETIO);
     barrage = null;
   }
 
@@ -50,7 +50,7 @@ public class Tumiki {
   }
 
   public BulletActor addTopBullet(int barragePtnIdx, BulletActorPool bullets,
-				  BulletTarget target, int type) {
+                                  BulletTarget target, int type) {
     if (!barrage)
       return null;
     Barrage b = barrage[barragePtnIdx];
@@ -72,17 +72,17 @@ public class Tumiki {
     glPushMatrix();
     glTranslatef(-size.x * PROPELLER_OFFSET, 0, 0);
     glScalef(size.x, size.y, (size.x  + size.y) / 2);
-    glCallList(displayListIdx + PROPELLER_SHAPE + 
-	       color * SHAPE_NUM + shade * SHAPE_NUM * COLOR_NUM);
+    glCallList(displayListIdx + PROPELLER_SHAPE +
+               color * SHAPE_NUM + shade * SHAPE_NUM * COLOR_NUM);
     glPopMatrix();
     glPushMatrix();
     glTranslatef(size.x * PROPELLER_OFFSET, 0, 0);
     glScalef(size.x, size.y, (size.x  + size.y) / 2);
     glCallList(displayListIdx + PROPELLER_SHAPE +
-	       color * SHAPE_NUM + shade * SHAPE_NUM * COLOR_NUM);
+               color * SHAPE_NUM + shade * SHAPE_NUM * COLOR_NUM);
     glPopMatrix();
   }
-  
+
   private void drawPropellerFront(float deg, int shade) {
     float d = deg;
     glRotatef(90, 1, 0, 0);
@@ -91,17 +91,17 @@ public class Tumiki {
     glPushMatrix();
     glTranslatef(-size.x * PROPELLER_OFFSET, (size.x  + size.y) / 2, (size.x  + size.y) / 2);
     glScalef(size.x, size.y, (size.x  + size.y) / 2);
-    glCallList(displayListIdx + PROPELLER_SHAPE + 
-	       color * SHAPE_NUM + shade * SHAPE_NUM * COLOR_NUM);
+    glCallList(displayListIdx + PROPELLER_SHAPE +
+               color * SHAPE_NUM + shade * SHAPE_NUM * COLOR_NUM);
     glPopMatrix();
     glPushMatrix();
     glTranslatef(size.x * PROPELLER_OFFSET, (size.x  + size.y) / 2, (size.x  + size.y) / 2);
     glScalef(size.x, size.y, (size.x  + size.y) / 2);
     glCallList(displayListIdx + PROPELLER_SHAPE +
-	       color * SHAPE_NUM + shade * SHAPE_NUM * COLOR_NUM);
+               color * SHAPE_NUM + shade * SHAPE_NUM * COLOR_NUM);
     glPopMatrix();
   }
-  
+
   private void drawPropeller(float deg, int shade, float sz) {
     float d = (shape - PROPELLER_SHAPE) * PI / 4 + deg;
     glRotatef(propellerCnt * 17 / size.x, -sin(d), cos(d), 0);
@@ -109,17 +109,17 @@ public class Tumiki {
     glPushMatrix();
     glTranslatef(-size.x * PROPELLER_OFFSET * sz, 0, 0);
     glScalef(size.x * sz, size.y * sz, (size.x  + size.y) / 2 * sz);
-    glCallList(displayListIdx + PROPELLER_SHAPE + 
-	       color * SHAPE_NUM + shade * SHAPE_NUM * COLOR_NUM);
+    glCallList(displayListIdx + PROPELLER_SHAPE +
+               color * SHAPE_NUM + shade * SHAPE_NUM * COLOR_NUM);
     glPopMatrix();
     glPushMatrix();
     glTranslatef(size.x * PROPELLER_OFFSET * sz, 0, 0);
     glScalef(size.x * sz, size.y * sz, (size.x  + size.y) / 2 * sz);
     glCallList(displayListIdx + PROPELLER_SHAPE +
-	       color * SHAPE_NUM + shade * SHAPE_NUM * COLOR_NUM);
+               color * SHAPE_NUM + shade * SHAPE_NUM * COLOR_NUM);
     glPopMatrix();
   }
-  
+
   private void drawPropellerFront(float deg, int shade, float sz) {
     float d = deg;
     glRotatef(90, 1, 0, 0);
@@ -127,20 +127,20 @@ public class Tumiki {
     glRotatef(rtod(d), 0, 0, 1);
     glPushMatrix();
     glTranslatef(-size.x * PROPELLER_OFFSET * sz,
-		 (size.x  + size.y) / 2 * sz, (size.x  + size.y) / 2 * sz);
+                 (size.x  + size.y) / 2 * sz, (size.x  + size.y) / 2 * sz);
     glScalef(size.x * sz, size.y * sz, (size.x  + size.y) / 2 * sz);
-    glCallList(displayListIdx + PROPELLER_SHAPE + 
-	       color * SHAPE_NUM + shade * SHAPE_NUM * COLOR_NUM);
+    glCallList(displayListIdx + PROPELLER_SHAPE +
+               color * SHAPE_NUM + shade * SHAPE_NUM * COLOR_NUM);
     glPopMatrix();
     glPushMatrix();
     glTranslatef(size.x * PROPELLER_OFFSET * sz,
-		 (size.x  + size.y) / 2 * sz, (size.x  + size.y) / 2 * sz);
+                 (size.x  + size.y) / 2 * sz, (size.x  + size.y) / 2 * sz);
     glScalef(size.x * sz, size.y * sz, (size.x  + size.y) / 2 * sz);
     glCallList(displayListIdx + PROPELLER_SHAPE +
-	       color * SHAPE_NUM + shade * SHAPE_NUM * COLOR_NUM);
+               color * SHAPE_NUM + shade * SHAPE_NUM * COLOR_NUM);
     glPopMatrix();
   }
-  
+
   public void draw(Vector pos, float z, int shade, float deg) {
     glPushMatrix();
     float ox = ofs.x * cos(deg) - ofs.y * sin(deg);
@@ -187,14 +187,14 @@ public class Tumiki {
     if (shape < PROPELLER_SHAPE) {
       glScalef(size.x, size.y, (size.x  + size.y) / 2);
       if (damaged)
-	glCallList
-	  (displayListIdx + shape + DAMAGED_COLOR * SHAPE_NUM + shade * SHAPE_NUM * COLOR_NUM);
+        glCallList
+          (displayListIdx + shape + DAMAGED_COLOR * SHAPE_NUM + shade * SHAPE_NUM * COLOR_NUM);
       else if (wounded)
-	glCallList
-	  (displayListIdx + shape + WOUNDED_COLOR * SHAPE_NUM + shade * SHAPE_NUM * COLOR_NUM);
+        glCallList
+          (displayListIdx + shape + WOUNDED_COLOR * SHAPE_NUM + shade * SHAPE_NUM * COLOR_NUM);
       else
-	glCallList
-	  (displayListIdx + shape + color * SHAPE_NUM + shade * SHAPE_NUM * COLOR_NUM);
+        glCallList
+          (displayListIdx + shape + color * SHAPE_NUM + shade * SHAPE_NUM * COLOR_NUM);
     } else if (shape == PROPELLER_SHAPE_FRONT) {
       drawPropellerFront(0, shade);
     } else {
@@ -207,7 +207,7 @@ public class Tumiki {
     float ox = x - ofs.x;
     float oy = y - ofs.y;
     if (ox > -checkHitSize.x && ox < checkHitSize.x &&
-	oy > -checkHitSize.y && oy < checkHitSize.y)
+        oy > -checkHitSize.y && oy < checkHitSize.y)
       return true;
     return false;
   }
@@ -222,7 +222,7 @@ public class Tumiki {
   public static const int COLOR_NUM = 12;
   public static const int DAMAGED_COLOR = 6;
   public static const int WOUNDED_COLOR = 0;
-  private static const float[3][COLOR_NUM] colorParams = 
+  private static const float[3][COLOR_NUM] colorParams =
     [
      [0.9, 0.6, 0.6], [0.6, 0.9, 0.6], [0.6, 0.6, 0.9],
      [0.8, 0.8, 0.6], [0.8, 0.6, 0.8], [0.6, 0.8, 0.8],
@@ -237,15 +237,15 @@ public class Tumiki {
     switch (i) {
     case 1:
       Screen.setColor
-	(colorParams[j][0] * 0.8, colorParams[j][1] * 0.8, colorParams[j][2] * 0.8); 
+        (colorParams[j][0] * 0.8, colorParams[j][1] * 0.8, colorParams[j][2] * 0.8);
       break;
     case 2:
       Screen.setColor
-	(colorParams[j][0] * 0.5, colorParams[j][1] * 0.5, colorParams[j][2] * 0.5); 
+        (colorParams[j][0] * 0.5, colorParams[j][1] * 0.5, colorParams[j][2] * 0.5);
       break;
     default:
       Screen.setColor
-	(colorParams[j][0] * 0.9, colorParams[j][1] * 0.9, colorParams[j][2] * 0.9); 
+        (colorParams[j][0] * 0.9, colorParams[j][1] * 0.9, colorParams[j][2] * 0.9);
       break;
     }
   }
@@ -254,15 +254,15 @@ public class Tumiki {
     switch (i) {
     case 0:
       Screen.setColor
-	(colorParams[j][0] * 0.7, colorParams[j][1] * 0.7, colorParams[j][2] * 0.7); 
+        (colorParams[j][0] * 0.7, colorParams[j][1] * 0.7, colorParams[j][2] * 0.7);
       break;
     case 1:
       Screen.setColor
-	(colorParams[j][0] * 0.6, colorParams[j][1] * 0.6, colorParams[j][2] * 0.6); 
+        (colorParams[j][0] * 0.6, colorParams[j][1] * 0.6, colorParams[j][2] * 0.6);
       break;
     case 2:
       Screen.setColor
-	(colorParams[j][0] * 0.4, colorParams[j][1] * 0.4, colorParams[j][2] * 0.4); 
+        (colorParams[j][0] * 0.4, colorParams[j][1] * 0.4, colorParams[j][2] * 0.4);
       break;
     }
   }
@@ -272,203 +272,203 @@ public class Tumiki {
     int di = displayListIdx;
     for (int i = 0; i < SHADE_NUM; i++) {
       for (int j = 0; j < COLOR_NUM; j++) {
-	glNewList(di, GL_COMPILE);
-	setFrontColor(j, i);
-	glBegin(GL_QUADS);
-	glVertex3f(1, 1, 0);
-	glVertex3f(-1, 1, 0);
-	glVertex3f(-1, -1, 0);
-	glVertex3f(1, -1, 0);
-	if (i < 3) {
-	  setSideColor(j, i);
-	  glVertex3f(-1, 1, 0);
-	  glVertex3f(1, 1, 0);
-	  glVertex3f(1, 1, DEPTH);
-	  glVertex3f(-1, 1, DEPTH);
-	  glVertex3f(-1, -1, 0);
-	  glVertex3f(-1, 1, 0);
-	  glVertex3f(-1, 1, DEPTH);
-	  glVertex3f(-1, -1, DEPTH);
-	  glVertex3f(1, -1, 0);
-	  glVertex3f(-1, -1, 0);
-	  glVertex3f(-1, -1, DEPTH);
-	  glVertex3f(1, -1, DEPTH);
-	  glVertex3f(1, 1, 0);
-	  glVertex3f(1, -1, 0);
-	  glVertex3f(1, -1, DEPTH);
-	  glVertex3f(1, 1, DEPTH);
-	}
-	glEnd();
-	if (i == 0 || i == 3) {
-	  Screen.setColor
-	    (colorParams[j][0], colorParams[j][1], colorParams[j][2]); 
-	  glBegin(GL_LINE_STRIP);
-	  if (i == 0) {
-	    glVertex3f(1 + LINE_PADDING, 1 + LINE_PADDING, LINE_PADDING);
-	    glVertex3f(-1 - LINE_PADDING, 1 + LINE_PADDING, LINE_PADDING);
-	    glVertex3f(-1 - LINE_PADDING, -1 - LINE_PADDING, LINE_PADDING);
-	    glVertex3f(1 + LINE_PADDING, -1 - LINE_PADDING, LINE_PADDING);
-	    glVertex3f(1 + LINE_PADDING, 1 + LINE_PADDING, LINE_PADDING);
-	  } else {
-	    glVertex3f(1, 1, 0);
-	    glVertex3f(-1, 1, 0);
-	    glVertex3f(-1, -1, 0);
-	    glVertex3f(1, -1, 0);
-	    glVertex3f(1, 1, 0);
-	  }
-	  glEnd();
-	  if (i == 0) {
-	    Screen.setColor
-	      (colorParams[j][0] * 0.8, colorParams[j][1] * 0.8, colorParams[j][2] * 0.8); 
-	    glBegin(GL_LINES);
-	    glVertex3f(1 + LINE_PADDING, 1 + LINE_PADDING, DEPTH);
-	    glVertex3f(1 + LINE_PADDING, 1 + LINE_PADDING, LINE_PADDING);
-	    glVertex3f(-1 - LINE_PADDING, 1 + LINE_PADDING, DEPTH);
-	    glVertex3f(-1 - LINE_PADDING, 1 + LINE_PADDING, LINE_PADDING);
-	    glVertex3f(-1 - LINE_PADDING, -1 - LINE_PADDING, DEPTH);
-	    glVertex3f(-1 - LINE_PADDING, -1 - LINE_PADDING, LINE_PADDING);
-	    glVertex3f(1 + LINE_PADDING, -1 - LINE_PADDING, DEPTH);
-	    glVertex3f(1 + LINE_PADDING, -1 - LINE_PADDING, LINE_PADDING);
-	    glEnd();
-	  }
-	}
-	glEndList();
-	di++;
-	for (int k = 0; k < 4; k++) {
-	  glNewList(di, GL_COMPILE);
-	  glRotatef(-90 * k, 0, 0, 1);
-	  setFrontColor(j, i);
-	  glBegin(GL_TRIANGLE_STRIP);
-	  glVertex3f(1, 1, 0);
-	  glVertex3f(-1, 1, 0);
-	  glVertex3f(-1, -1, 0);
-	  glEnd();
-	  if (i < 3) {
-	    setSideColor(j, i);
-	    glBegin(GL_QUADS);
-	    glVertex3f(-1, 1, 0);
-	    glVertex3f(1, 1, 0);
-	    glVertex3f(1, 1, DEPTH);
-	    glVertex3f(-1, 1, DEPTH);
-	    glVertex3f(-1, -1, 0);
-	    glVertex3f(-1, 1, 0);
-	    glVertex3f(-1, 1, DEPTH);
-	    glVertex3f(-1, -1, DEPTH);
-	    glVertex3f(1, 1, 0);
-	    glVertex3f(-1, -1, 0);
-	    glVertex3f(-1, -1, DEPTH);
-	    glVertex3f(1, 1, DEPTH);
-	    glEnd();
-	  }
-	  if (i == 0 || i == 3) {
-	    Screen.setColor
-	      (colorParams[j][0], colorParams[j][1], colorParams[j][2]); 
-	    glBegin(GL_LINE_STRIP);
-	    glVertex3f(1 + LINE_PADDING, 1 + LINE_PADDING, LINE_PADDING);
-	    glVertex3f(-1 - LINE_PADDING, 1 + LINE_PADDING, LINE_PADDING);
-	    glVertex3f(-1 - LINE_PADDING, -1 - LINE_PADDING, LINE_PADDING);
-	    glVertex3f(1 + LINE_PADDING, 1 + LINE_PADDING, LINE_PADDING);
-	    glEnd();
-	    if (i == 0) {
-	      Screen.setColor
-		(colorParams[j][0] * 0.8, colorParams[j][1] * 0.8, colorParams[j][2] * 0.8); 
-	      glBegin(GL_LINES);
-	      glVertex3f(1 + LINE_PADDING, 1 + LINE_PADDING, DEPTH);
-	      glVertex3f(1 + LINE_PADDING, 1 + LINE_PADDING, LINE_PADDING);
-	      glVertex3f(-1 - LINE_PADDING, 1 + LINE_PADDING, DEPTH);
-	      glVertex3f(-1 - LINE_PADDING, 1 + LINE_PADDING, LINE_PADDING);
-	      glVertex3f(-1 - LINE_PADDING, -1 - LINE_PADDING, DEPTH);
-	      glVertex3f(-1 - LINE_PADDING, -1 - LINE_PADDING, LINE_PADDING);
-	      glEnd();
-	    }
-	  }
-	  glEndList();
-	  di++;
-	}
-	for (int k = 0; k < 4; k++) {
-	  glNewList(di, GL_COMPILE);
-	  glRotatef(-90 * k, 0, 0, 1);
-	  setFrontColor(j, i);
-	  glBegin(GL_TRIANGLE_STRIP);
-	  glVertex3f(1, -1, 0);
-	  glVertex3f(0, 1, 0);
-	  glVertex3f(-1, -1, 0);
-	  glEnd();
-	  if (i < 3) {
-	    setSideColor(j, i);
-	    glBegin(GL_QUADS);
-	    glVertex3f(0, 1, 0);
-	    glVertex3f(1, -1, 0);
-	    glVertex3f(1, -1, DEPTH);
-	    glVertex3f(0, 1, DEPTH);
-	    glVertex3f(-1, -1, 0);
-	    glVertex3f(0, 1, 0);
-	    glVertex3f(0, 1, DEPTH);
-	    glVertex3f(-1, -1, DEPTH);
-	    glVertex3f(1, -1, 0);
-	    glVertex3f(-1, -1, 0);
-	    glVertex3f(-1, -1, DEPTH);
-	    glVertex3f(1, -1, DEPTH);
-	    glEnd();
-	  }
-	  if (i == 0 || i == 3) {
-	    Screen.setColor
-	      (colorParams[j][0], colorParams[j][1], colorParams[j][2]); 
-	    glBegin(GL_LINE_STRIP);
-	    glVertex3f(1 + LINE_PADDING, -1 + LINE_PADDING, LINE_PADDING);
-	    glVertex3f(0, 1 + LINE_PADDING, LINE_PADDING);
-	    glVertex3f(-1 - LINE_PADDING, -1 - LINE_PADDING, LINE_PADDING);
-	    glVertex3f(1 + LINE_PADDING, -1 - LINE_PADDING, LINE_PADDING);
-	    glEnd();
-	    if (i == 0) {
-	      Screen.setColor
-		(colorParams[j][0] * 0.8, colorParams[j][1] * 0.8, colorParams[j][2] * 0.8); 
-	      glBegin(GL_LINES);
-	      glVertex3f(1 + LINE_PADDING, -1 - LINE_PADDING, DEPTH);
-	      glVertex3f(1 + LINE_PADDING, -1 + LINE_PADDING, LINE_PADDING);
-	      glVertex3f(0, 1 + LINE_PADDING, DEPTH);
-	      glVertex3f(0, 1 + LINE_PADDING, LINE_PADDING);
-	      glVertex3f(-1 - LINE_PADDING, -1 - LINE_PADDING, DEPTH);
-	      glVertex3f(-1 - LINE_PADDING, -1 - LINE_PADDING, LINE_PADDING);
-	      glEnd();
-	    }
-	  }
-	  glEndList();
-	  di++;
-	}
-	glNewList(di, GL_COMPILE);
-	setFrontColor(j, i);
-	glBegin(GL_QUADS);
-	glVertex3f(1, 1, 0);
-	glVertex3f(-1, 1, 0);
-	glVertex3f(-1, -1, 0);
-	glVertex3f(1, -1, 0);
-	glVertex3f(1, 1, DEPTH);
-	glVertex3f(1, -1, DEPTH);
-	glVertex3f(-1, -1, DEPTH);
-	glVertex3f(-1, 1, DEPTH);
-	if (i < 3) {
-	  setSideColor(j, i);
-	  glVertex3f(-1, 1, 0);
-	  glVertex3f(1, 1, 0);
-	  glVertex3f(1, 1, DEPTH);
-	  glVertex3f(-1, 1, DEPTH);
-	  glVertex3f(-1, -1, 0);
-	  glVertex3f(-1, 1, 0);
-	  glVertex3f(-1, 1, DEPTH);
-	  glVertex3f(-1, -1, DEPTH);
-	  glVertex3f(1, -1, 0);
-	  glVertex3f(-1, -1, 0);
-	  glVertex3f(-1, -1, DEPTH);
-	  glVertex3f(1, -1, DEPTH);
-	  glVertex3f(1, 1, 0);
-	  glVertex3f(1, -1, 0);
-	  glVertex3f(1, -1, DEPTH);
-	  glVertex3f(1, 1, DEPTH);
-	}
-	glEnd();
-	glEndList();
-	di++;
+        glNewList(di, GL_COMPILE);
+        setFrontColor(j, i);
+        glBegin(GL_QUADS);
+        glVertex3f(1, 1, 0);
+        glVertex3f(-1, 1, 0);
+        glVertex3f(-1, -1, 0);
+        glVertex3f(1, -1, 0);
+        if (i < 3) {
+          setSideColor(j, i);
+          glVertex3f(-1, 1, 0);
+          glVertex3f(1, 1, 0);
+          glVertex3f(1, 1, DEPTH);
+          glVertex3f(-1, 1, DEPTH);
+          glVertex3f(-1, -1, 0);
+          glVertex3f(-1, 1, 0);
+          glVertex3f(-1, 1, DEPTH);
+          glVertex3f(-1, -1, DEPTH);
+          glVertex3f(1, -1, 0);
+          glVertex3f(-1, -1, 0);
+          glVertex3f(-1, -1, DEPTH);
+          glVertex3f(1, -1, DEPTH);
+          glVertex3f(1, 1, 0);
+          glVertex3f(1, -1, 0);
+          glVertex3f(1, -1, DEPTH);
+          glVertex3f(1, 1, DEPTH);
+        }
+        glEnd();
+        if (i == 0 || i == 3) {
+          Screen.setColor
+            (colorParams[j][0], colorParams[j][1], colorParams[j][2]);
+          glBegin(GL_LINE_STRIP);
+          if (i == 0) {
+            glVertex3f(1 + LINE_PADDING, 1 + LINE_PADDING, LINE_PADDING);
+            glVertex3f(-1 - LINE_PADDING, 1 + LINE_PADDING, LINE_PADDING);
+            glVertex3f(-1 - LINE_PADDING, -1 - LINE_PADDING, LINE_PADDING);
+            glVertex3f(1 + LINE_PADDING, -1 - LINE_PADDING, LINE_PADDING);
+            glVertex3f(1 + LINE_PADDING, 1 + LINE_PADDING, LINE_PADDING);
+          } else {
+            glVertex3f(1, 1, 0);
+            glVertex3f(-1, 1, 0);
+            glVertex3f(-1, -1, 0);
+            glVertex3f(1, -1, 0);
+            glVertex3f(1, 1, 0);
+          }
+          glEnd();
+          if (i == 0) {
+            Screen.setColor
+              (colorParams[j][0] * 0.8, colorParams[j][1] * 0.8, colorParams[j][2] * 0.8);
+            glBegin(GL_LINES);
+            glVertex3f(1 + LINE_PADDING, 1 + LINE_PADDING, DEPTH);
+            glVertex3f(1 + LINE_PADDING, 1 + LINE_PADDING, LINE_PADDING);
+            glVertex3f(-1 - LINE_PADDING, 1 + LINE_PADDING, DEPTH);
+            glVertex3f(-1 - LINE_PADDING, 1 + LINE_PADDING, LINE_PADDING);
+            glVertex3f(-1 - LINE_PADDING, -1 - LINE_PADDING, DEPTH);
+            glVertex3f(-1 - LINE_PADDING, -1 - LINE_PADDING, LINE_PADDING);
+            glVertex3f(1 + LINE_PADDING, -1 - LINE_PADDING, DEPTH);
+            glVertex3f(1 + LINE_PADDING, -1 - LINE_PADDING, LINE_PADDING);
+            glEnd();
+          }
+        }
+        glEndList();
+        di++;
+        for (int k = 0; k < 4; k++) {
+          glNewList(di, GL_COMPILE);
+          glRotatef(-90 * k, 0, 0, 1);
+          setFrontColor(j, i);
+          glBegin(GL_TRIANGLE_STRIP);
+          glVertex3f(1, 1, 0);
+          glVertex3f(-1, 1, 0);
+          glVertex3f(-1, -1, 0);
+          glEnd();
+          if (i < 3) {
+            setSideColor(j, i);
+            glBegin(GL_QUADS);
+            glVertex3f(-1, 1, 0);
+            glVertex3f(1, 1, 0);
+            glVertex3f(1, 1, DEPTH);
+            glVertex3f(-1, 1, DEPTH);
+            glVertex3f(-1, -1, 0);
+            glVertex3f(-1, 1, 0);
+            glVertex3f(-1, 1, DEPTH);
+            glVertex3f(-1, -1, DEPTH);
+            glVertex3f(1, 1, 0);
+            glVertex3f(-1, -1, 0);
+            glVertex3f(-1, -1, DEPTH);
+            glVertex3f(1, 1, DEPTH);
+            glEnd();
+          }
+          if (i == 0 || i == 3) {
+            Screen.setColor
+              (colorParams[j][0], colorParams[j][1], colorParams[j][2]);
+            glBegin(GL_LINE_STRIP);
+            glVertex3f(1 + LINE_PADDING, 1 + LINE_PADDING, LINE_PADDING);
+            glVertex3f(-1 - LINE_PADDING, 1 + LINE_PADDING, LINE_PADDING);
+            glVertex3f(-1 - LINE_PADDING, -1 - LINE_PADDING, LINE_PADDING);
+            glVertex3f(1 + LINE_PADDING, 1 + LINE_PADDING, LINE_PADDING);
+            glEnd();
+            if (i == 0) {
+              Screen.setColor
+                (colorParams[j][0] * 0.8, colorParams[j][1] * 0.8, colorParams[j][2] * 0.8);
+              glBegin(GL_LINES);
+              glVertex3f(1 + LINE_PADDING, 1 + LINE_PADDING, DEPTH);
+              glVertex3f(1 + LINE_PADDING, 1 + LINE_PADDING, LINE_PADDING);
+              glVertex3f(-1 - LINE_PADDING, 1 + LINE_PADDING, DEPTH);
+              glVertex3f(-1 - LINE_PADDING, 1 + LINE_PADDING, LINE_PADDING);
+              glVertex3f(-1 - LINE_PADDING, -1 - LINE_PADDING, DEPTH);
+              glVertex3f(-1 - LINE_PADDING, -1 - LINE_PADDING, LINE_PADDING);
+              glEnd();
+            }
+          }
+          glEndList();
+          di++;
+        }
+        for (int k = 0; k < 4; k++) {
+          glNewList(di, GL_COMPILE);
+          glRotatef(-90 * k, 0, 0, 1);
+          setFrontColor(j, i);
+          glBegin(GL_TRIANGLE_STRIP);
+          glVertex3f(1, -1, 0);
+          glVertex3f(0, 1, 0);
+          glVertex3f(-1, -1, 0);
+          glEnd();
+          if (i < 3) {
+            setSideColor(j, i);
+            glBegin(GL_QUADS);
+            glVertex3f(0, 1, 0);
+            glVertex3f(1, -1, 0);
+            glVertex3f(1, -1, DEPTH);
+            glVertex3f(0, 1, DEPTH);
+            glVertex3f(-1, -1, 0);
+            glVertex3f(0, 1, 0);
+            glVertex3f(0, 1, DEPTH);
+            glVertex3f(-1, -1, DEPTH);
+            glVertex3f(1, -1, 0);
+            glVertex3f(-1, -1, 0);
+            glVertex3f(-1, -1, DEPTH);
+            glVertex3f(1, -1, DEPTH);
+            glEnd();
+          }
+          if (i == 0 || i == 3) {
+            Screen.setColor
+              (colorParams[j][0], colorParams[j][1], colorParams[j][2]);
+            glBegin(GL_LINE_STRIP);
+            glVertex3f(1 + LINE_PADDING, -1 + LINE_PADDING, LINE_PADDING);
+            glVertex3f(0, 1 + LINE_PADDING, LINE_PADDING);
+            glVertex3f(-1 - LINE_PADDING, -1 - LINE_PADDING, LINE_PADDING);
+            glVertex3f(1 + LINE_PADDING, -1 - LINE_PADDING, LINE_PADDING);
+            glEnd();
+            if (i == 0) {
+              Screen.setColor
+                (colorParams[j][0] * 0.8, colorParams[j][1] * 0.8, colorParams[j][2] * 0.8);
+              glBegin(GL_LINES);
+              glVertex3f(1 + LINE_PADDING, -1 - LINE_PADDING, DEPTH);
+              glVertex3f(1 + LINE_PADDING, -1 + LINE_PADDING, LINE_PADDING);
+              glVertex3f(0, 1 + LINE_PADDING, DEPTH);
+              glVertex3f(0, 1 + LINE_PADDING, LINE_PADDING);
+              glVertex3f(-1 - LINE_PADDING, -1 - LINE_PADDING, DEPTH);
+              glVertex3f(-1 - LINE_PADDING, -1 - LINE_PADDING, LINE_PADDING);
+              glEnd();
+            }
+          }
+          glEndList();
+          di++;
+        }
+        glNewList(di, GL_COMPILE);
+        setFrontColor(j, i);
+        glBegin(GL_QUADS);
+        glVertex3f(1, 1, 0);
+        glVertex3f(-1, 1, 0);
+        glVertex3f(-1, -1, 0);
+        glVertex3f(1, -1, 0);
+        glVertex3f(1, 1, DEPTH);
+        glVertex3f(1, -1, DEPTH);
+        glVertex3f(-1, -1, DEPTH);
+        glVertex3f(-1, 1, DEPTH);
+        if (i < 3) {
+          setSideColor(j, i);
+          glVertex3f(-1, 1, 0);
+          glVertex3f(1, 1, 0);
+          glVertex3f(1, 1, DEPTH);
+          glVertex3f(-1, 1, DEPTH);
+          glVertex3f(-1, -1, 0);
+          glVertex3f(-1, 1, 0);
+          glVertex3f(-1, 1, DEPTH);
+          glVertex3f(-1, -1, DEPTH);
+          glVertex3f(1, -1, 0);
+          glVertex3f(-1, -1, 0);
+          glVertex3f(-1, -1, DEPTH);
+          glVertex3f(1, -1, DEPTH);
+          glVertex3f(1, 1, 0);
+          glVertex3f(1, -1, 0);
+          glVertex3f(1, -1, DEPTH);
+          glVertex3f(1, 1, DEPTH);
+        }
+        glEnd();
+        glEndList();
+        di++;
       }
     }
   }
@@ -518,7 +518,7 @@ public class Barrage {
   private static const int SHOT_COLOR = 3;
 
   public BulletActor addTopBullet(BulletActorPool bullets,
-				  BulletTarget target, int type) {
+                                  BulletTarget target, int type) {
     if (size <= 0)
       return null;
     int cl;
@@ -534,9 +534,9 @@ public class Barrage {
       break;
     }
     return bullets.addTopBullet(parser, rank, speed,
-				0, 0, PI / 2 * 3, 0,
-				shape, cl, size, xrev, yReverse * yrev, target, type,
-				prevWait, postWait);
+                                0, 0, PI / 2 * 3, 0,
+                                shape, cl, size, xrev, yReverse * yrev, target, type,
+                                prevWait, postWait);
   }
 }
 

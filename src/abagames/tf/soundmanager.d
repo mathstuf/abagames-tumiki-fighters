@@ -28,21 +28,21 @@ public class SoundManager {
   GameManager manager;
   Music bgm[BGM_NUM];
   Chunk se[SE_NUM];
-  const char[][] bgmFileName = 
+  const char[][] bgmFileName =
     ["we_are_tumiki_fighters.ogg",
     "just_over_the_horizon.ogg",
     "panic_on_meadow.ogg",
     "here_comes_a_gigantic_toy.ogg",
     "battle_over_the_junk_city.ogg",
     "return_to_home.ogg"];
-  const char[][] seFileName = 
+  const char[][] seFileName =
     ["ship_shot.wav", "stuck.wav", "stuck_bonus.wav",
     "stuck_destroyed.wav", "ship_destroyed.wav",
     "enemy_damaged.wav", "small_enemy_destroyed.wav", "enemy_destroyed.wav", "boss_destroyed.wav",
     "extend.wav", "warning.wav", "propeller.wav", "stuck_bonus_pushin.wav"];
-  const int[] seChannel = 
-    [0, 1, 2, 
-    3, 2, 
+  const int[] seChannel =
+    [0, 1, 2,
+    3, 2,
     4, 5, 6, 6,
     7, 7, 7, 2];
  private:
@@ -75,27 +75,27 @@ public class SoundManager {
   }
 
   public static void playBgm(int n) {
-    if (Sound.noSound || 
-	(manager.state != GameManager.State.IN_GAME &&
-	 manager.state != GameManager.State.START_GAME &&
-	 manager.state != GameManager.State.END_GAME))
+    if (Sound.noSound ||
+        (manager.state != GameManager.State.IN_GAME &&
+         manager.state != GameManager.State.START_GAME &&
+         manager.state != GameManager.State.END_GAME))
       return;
     bgm[n].play();
   }
 
   public static void playBgmOnce(int n) {
-    if (Sound.noSound || 
-	(manager.state != GameManager.State.IN_GAME &&
-	 manager.state != GameManager.State.START_GAME &&
-	 manager.state != GameManager.State.END_GAME))
+    if (Sound.noSound ||
+        (manager.state != GameManager.State.IN_GAME &&
+         manager.state != GameManager.State.START_GAME &&
+         manager.state != GameManager.State.END_GAME))
       return;
     bgm[n].playOnce();
   }
 
   public static void playSe(int n) {
     if (Sound.noSound ||
-	(manager.state != GameManager.State.IN_GAME &&
-	 manager.state != GameManager.State.START_GAME))
+        (manager.state != GameManager.State.IN_GAME &&
+         manager.state != GameManager.State.START_GAME))
       return;
 
     if (n >= SE_NUM) return;

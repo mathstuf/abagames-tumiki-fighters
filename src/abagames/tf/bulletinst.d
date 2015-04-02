@@ -10,7 +10,7 @@ private import abagames.tf.bullettarget;
 private import abagames.tf.stagemanager;
 
 /**
- * Bullet with params of sppedRank, shape, color, size, 
+ * Bullet with params of sppedRank, shape, color, size,
  * the horizontal reverse moving, target, type.
  */
 public class BulletInst: MorphBullet {
@@ -36,8 +36,8 @@ public class BulletInst: MorphBullet {
     this.stageManager = stageManager;
   }
 
-  public void setParam(float sr, int sh, int cl, float sz, 
-		       float xr, float yr, BulletTarget tr, int tp) {
+  public void setParam(float sr, int sh, int cl, float sz,
+                       float xr, float yr, BulletTarget tr, int tp) {
     speedRank = sr;
     shape = sh;
     color = cl;
@@ -54,7 +54,7 @@ public class BulletInst: MorphBullet {
       float sr = stageManager.rank / (1 + morphNum * 0.33);
       float r = super.rank + (1 - super.rank) * sr;
       if (r > 1)
-	r = 1;
+        r = 1;
       return r;
     } else {
       return super.rank;

@@ -8,8 +8,8 @@
   <wait>1</wait>
   <fire>
    <bullet>
-   	<direction type="relative">0</direction>
-	<speed type="relative">$rank</speed>
+    <direction type="relative">0</direction>
+ <speed type="relative">$rank</speed>
     <actionRef label="ofs">
      <param>90</param>
      <param>0.1</param>

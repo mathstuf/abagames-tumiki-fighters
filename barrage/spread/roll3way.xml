@@ -5,19 +5,19 @@
           xmlns="http://www.asahi-net.or.jp/~cs8k-cyu/bulletml">
 
 <action label="top">
-	<repeat> <times>3+$rank*15</times>
-	<action>
-		<repeat> <times>3</times>
-		<action>
-			<fire>
-				<direction type="sequence">118</direction>
-				<bullet/>
-			</fire>
-		</action>
-		</repeat>
-		<wait>10-$rank*5</wait>
-	</action>
-	</repeat>
+ <repeat> <times>3+$rank*15</times>
+ <action>
+  <repeat> <times>3</times>
+  <action>
+   <fire>
+    <direction type="sequence">118</direction>
+    <bullet/>
+   </fire>
+  </action>
+  </repeat>
+  <wait>10-$rank*5</wait>
+ </action>
+ </repeat>
 </action>
 
 </bulletml>

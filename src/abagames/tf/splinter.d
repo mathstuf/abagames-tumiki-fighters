@@ -120,8 +120,8 @@ public class Splinter: Actor {
     if (!isBoss) {
       vel.y -= GRAVITY;
       if (pos.y < -field.size.y - tumikiSet.size) {
-	isExist = false;
-	return;
+        isExist = false;
+        return;
       }
       float sd = sin(deg) * COLLISION_RATIO, cd = cos(deg) * COLLISION_RATIO;
       colDatums[0].x = pos.x + tumikiSet.sizeXm * cd;
@@ -135,57 +135,57 @@ public class Splinter: Actor {
       int di1 = 0, di2 = 1;
       int idx = 4;
       for (int i = 0; i < 4; i++) {
-	float ox = (colDatums[di2].x - colDatums[di1].x) / 4;
-	float oy = (colDatums[di2].y - colDatums[di1].y) / 4;
-	float dx = colDatums[di1].x;
-	float dy = colDatums[di1].y;
-	for (int j = 0; j < 3; j++) {
-	  dx += ox;
-	  dy += oy;
-	  colDatums[idx].x = dx;
-	  colDatums[idx].y = dy;
-	  idx++;
-	}
-	di1++;
-	di2++;
-	if (di2 > 3)
-	  di2 = 0;
+        float ox = (colDatums[di2].x - colDatums[di1].x) / 4;
+        float oy = (colDatums[di2].y - colDatums[di1].y) / 4;
+        float dx = colDatums[di1].x;
+        float dy = colDatums[di1].y;
+        for (int j = 0; j < 3; j++) {
+          dx += ox;
+          dy += oy;
+          colDatums[idx].x = dx;
+          colDatums[idx].y = dy;
+          idx++;
+        }
+        di1++;
+        di2++;
+        if (di2 > 3)
+          di2 = 0;
       }
       if (ship.cnt < -Ship.INVINCIBLE_CNT)
-	return;
+        return;
       foreach (Vector cd; colDatums) {
-	if (ship.stuckEnemies.checkHit(cd)) {
-	  StuckEnemy se = cast(StuckEnemy) ship.stuckEnemies.getInstance();
-	  if (se) {
-	    float ox = pos.x - ship.pos.x, oy = pos.y - ship.pos.y;
-	    float sx = ox * cos(-ship.deg) - oy * sin(-ship.deg);
-	    float sy = ox * sin(-ship.deg) + oy * cos(-ship.deg);
-	    if (!se.set(sx, sy, deg - ship.deg, tumikiSet, barragePtnIdx))
-	      continue;
-	    if (!flyin) {
-	      int s = (tumikiSet.score / 2 / 10) * 10;
-	      manager.addScore(s, pos);
-	    }
-	    particles.add(3, pos, 0, PI * 2, 0.05, 0.3, Particle.TypeName.SMOKE);
-	    SoundManager.playSe(SoundManager.Se.STUCK);
-	  }
-	  isExist = false;
-	  return;
-	}
+        if (ship.stuckEnemies.checkHit(cd)) {
+          StuckEnemy se = cast(StuckEnemy) ship.stuckEnemies.getInstance();
+          if (se) {
+            float ox = pos.x - ship.pos.x, oy = pos.y - ship.pos.y;
+            float sx = ox * cos(-ship.deg) - oy * sin(-ship.deg);
+            float sy = ox * sin(-ship.deg) + oy * cos(-ship.deg);
+            if (!se.set(sx, sy, deg - ship.deg, tumikiSet, barragePtnIdx))
+              continue;
+            if (!flyin) {
+              int s = (tumikiSet.score / 2 / 10) * 10;
+              manager.addScore(s, pos);
+            }
+            particles.add(3, pos, 0, PI * 2, 0.05, 0.3, Particle.TypeName.SMOKE);
+            SoundManager.playSe(SoundManager.Se.STUCK);
+          }
+          isExist = false;
+          return;
+        }
       }
     } else {
       vel.x *= 0.99;
       particles.add(1, pos, 0, PI * 2, 0.5  + rand.nextFloat(2), 0.5, Particle.TypeName.SPARK);
       if (rand.nextInt(45) == 0) {
-	particles.add(3 + rand.nextInt(4), pos, 0, PI * 2, 0.3, 0.7, Particle.TypeName.SMOKE);
-	SoundManager.playSe(SoundManager.Se.ENEMY_DESTROYED);
+        particles.add(3 + rand.nextInt(4), pos, 0, PI * 2, 0.3, 0.7, Particle.TypeName.SMOKE);
+        SoundManager.playSe(SoundManager.Se.ENEMY_DESTROYED);
       }
       if (cnt > 180) {
-	particles.add(32, pos, 0, PI * 2, 2, 0.5, Particle.TypeName.SPARK);
-	particles.add(15, pos, 0, PI * 2, 0.5, 1.5, Particle.TypeName.SMOKE);
-	particles.add(15, pos, 0, PI * 2, 3, 1, Particle.TypeName.SMOKE);
-	SoundManager.playSe(SoundManager.Se.BOSS_DESTROYED);
-	isExist = false;
+        particles.add(32, pos, 0, PI * 2, 2, 0.5, Particle.TypeName.SPARK);
+        particles.add(15, pos, 0, PI * 2, 0.5, 1.5, Particle.TypeName.SMOKE);
+        particles.add(15, pos, 0, PI * 2, 3, 1, Particle.TypeName.SMOKE);
+        SoundManager.playSe(SoundManager.Se.BOSS_DESTROYED);
+        isExist = false;
       }
     }
   }
@@ -194,15 +194,15 @@ public class Splinter: Actor {
     tumikiSet.drawShade(pos, -0.7, 1, deg);
     if (hasSign && (cnt & 31) < 24) {
       LetterRender.drawString
-	("CATCH ME!", pos.x - 6, pos.y + 2.7, 0.6, LetterRender.Direction.TO_RIGHT, 3, true);
+        ("CATCH ME!", pos.x - 6, pos.y + 2.7, 0.6, LetterRender.Direction.TO_RIGHT, 3, true);
     }
   }
 
   public bool checkHit(Vector pos) {
-    if (pos.checkSide(colDatums[0], colDatums[1]) * 
-	pos.checkSide(colDatums[3], colDatums[2]) < 0 &&
-	pos.checkSide(colDatums[1], colDatums[2]) * 
-	pos.checkSide(colDatums[0], colDatums[3]) < 0)
+    if (pos.checkSide(colDatums[0], colDatums[1]) *
+        pos.checkSide(colDatums[3], colDatums[2]) < 0 &&
+        pos.checkSide(colDatums[1], colDatums[2]) *
+        pos.checkSide(colDatums[0], colDatums[3]) < 0)
       return true;
     else
       return false;
@@ -226,7 +226,7 @@ public class SplinterInitializer: ActorInitializer {
 
 public class SplinterPool: ActorPool {
  private:
-  
+
   public this(int n, ActorInitializer ini) {
     auto Splinter splinterClass = new Splinter;
     super(n, splinterClass, ini);
@@ -235,9 +235,9 @@ public class SplinterPool: ActorPool {
   public bool checkHit(Vector pos) {
     foreach (Actor ac; actor) {
       if (ac.isExist) {
-	Splinter sp = cast(Splinter) ac;
-	if (sp.checkHit(pos))
-	  return true;
+        Splinter sp = cast(Splinter) ac;
+        if (sp.checkHit(pos))
+          return true;
       }
     }
     return false;

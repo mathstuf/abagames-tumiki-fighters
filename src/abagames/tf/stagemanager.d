@@ -92,14 +92,14 @@ public class StageManager {
   public void move() {
     if (nextApp) {
       while (nextApp.startTime <= cnt) {
-	setAppearance(nextApp, bossComing);
-	if (bossComing)
-	  bossComing = false;
-	if (!pattern.hasNext) {
-	  nextApp = null;
-	  break;
-	}
-	nextApp = pattern.next;
+        setAppearance(nextApp, bossComing);
+        if (bossComing)
+          bossComing = false;
+        if (!pattern.hasNext) {
+          nextApp = null;
+          break;
+        }
+        nextApp = pattern.next;
       }
     }
     cnt++;
@@ -112,35 +112,35 @@ public class StageManager {
       SoundManager.playSe(SoundManager.Se.WARNING);
     if (cnt == warningCnt + 240) {
       if (manager.stage == STAGE_NUM - 1)
-	SoundManager.playBgm(SoundManager.Bgm.LAST_BOSS);
+        SoundManager.playBgm(SoundManager.Bgm.LAST_BOSS);
       else
-	SoundManager.playBgm(SoundManager.Bgm.BOSS);
+        SoundManager.playBgm(SoundManager.Bgm.BOSS);
     }
     foreach (EnemyAppearance ea; appearance) {
       if (ea.cnt < 0)
-	continue;
+        continue;
       if (ea.wait && Enemy.totalNum <= 0)
-	ea.wait = false;
+        ea.wait = false;
       if ((ea.cnt % ea.pattern.interval) == 0) {
-	EnemyAppearancePattern p = ea.pattern;
-	float x, y;
-	switch (p.posType) {
-	case EnemyAppearancePattern.AppearancePos.FRONT:
-	  x = field.size.x - p.spec.sizeXm * 1.1f;
-	  y = field.size.y * (p.pos + rand.nextSignedFloat(p.width));
-	  break;
-	case EnemyAppearancePattern.AppearancePos.TOP:
-	  x = field.size.x * (p.pos + rand.nextSignedFloat(p.width));
-	  y = field.size.y - p.spec.sizeYm * 1.1f;
-	  break;
-	}
-	if (!ea.wait)
-	  addEnemy(x, y, p.spec, p.move, ea.isBoss);
+        EnemyAppearancePattern p = ea.pattern;
+        float x, y;
+        switch (p.posType) {
+        case EnemyAppearancePattern.AppearancePos.FRONT:
+          x = field.size.x - p.spec.sizeXm * 1.1f;
+          y = field.size.y * (p.pos + rand.nextSignedFloat(p.width));
+          break;
+        case EnemyAppearancePattern.AppearancePos.TOP:
+          x = field.size.x * (p.pos + rand.nextSignedFloat(p.width));
+          y = field.size.y - p.spec.sizeYm * 1.1f;
+          break;
+        }
+        if (!ea.wait)
+          addEnemy(x, y, p.spec, p.move, ea.isBoss);
       }
       ea.cnt++;
       if (ea.cnt >= ea.pattern.duration) {
-	ea.cnt = -1;
-	continue;
+        ea.cnt = -1;
+        continue;
       }
     }
   }
@@ -192,7 +192,7 @@ public class StagePattern {
     warningCnt = atoi(si.next);
     for (;;) {
       if (!si.hasNext)
-	break;
+        break;
       int startTime = atoi(si.next);
       int duration = atoi(si.next);
       int interval = atoi(si.next);
@@ -203,46 +203,46 @@ public class StagePattern {
       v = si.next;
       bool wted;
       if (v == "y")
-	wted = true;
+        wted = true;
       else
-	wted = false;
+        wted = false;
       v = si.next;
       EnemySpec es = EnemySpec.getInstance(v);
       EnemyAppearancePattern eap = new EnemyAppearancePattern
-	(startTime, duration, interval, posType, pos, width, wted, es);
+        (startTime, duration, interval, posType, pos, width, wted, es);
       float d;
       v = si.next;
       if (v == "p") {
-	eap.startSetPointsMove();
-	eap.setWithdrawCnt(atoi(si.next));
-	int atIdx = PointsMovePattern.BASIC_PATTERN_IDX;
-	for (;;) {
-	  float speed = atof(si.next);
-	  eap.setMoveSpeed(atIdx, speed);
-	  for (;;) {
-	    v = si.next;
-	    if (v == "e")
-	      break;
-	    float x = atof(v);
-	    float y = atof(si.next);
-	    eap.addMovePoint(atIdx, x, y);
-	  }
-	  v = si.next;
-	  if (v == "e")
-	    break;
-	  atIdx = atoi(v);
-	}
+        eap.startSetPointsMove();
+        eap.setWithdrawCnt(atoi(si.next));
+        int atIdx = PointsMovePattern.BASIC_PATTERN_IDX;
+        for (;;) {
+          float speed = atof(si.next);
+          eap.setMoveSpeed(atIdx, speed);
+          for (;;) {
+            v = si.next;
+            if (v == "e")
+              break;
+            float x = atof(v);
+            float y = atof(si.next);
+            eap.addMovePoint(atIdx, x, y);
+          }
+          v = si.next;
+          if (v == "e")
+            break;
+          atIdx = atoi(v);
+        }
       } else {
-	eap.setMoveBulletML(v);
-	eap.setSpeedRank(atof(si.next));
+        eap.setMoveBulletML(v);
+        eap.setSpeedRank(atof(si.next));
       }
       switch (posType) {
       case EnemyAppearancePattern.AppearancePos.FRONT:
-	d = PI / 2 * 3;
-	break;
+        d = PI / 2 * 3;
+        break;
       case EnemyAppearancePattern.AppearancePos.TOP:
-	d = PI;
-	break;
+        d = PI;
+        break;
       }
       eap.setInitialDeg(d);
       pattern ~= eap;

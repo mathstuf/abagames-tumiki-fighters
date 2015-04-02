@@ -204,7 +204,7 @@ public class GameManager: abagames.util.sdl.gamemanager.GameManager {
     state = State.IN_GAME;
   }
 
-  private const char[][] stageMessage = 
+  private const char[][] stageMessage =
     [
      "WE ARE TUMIKI FIGHTERS!",
      "JUST OVER THE HORIZON",
@@ -266,9 +266,9 @@ public class GameManager: abagames.util.sdl.gamemanager.GameManager {
       SoundManager.playSe(SoundManager.Se.EXTEND);
       left++;
       if (extendScore <= firstExtend)
-	extendScore = everyExtend;
-      else 
-	extendScore += everyExtend;
+        extendScore = everyExtend;
+      else
+        extendScore += everyExtend;
     }
   }
 
@@ -379,19 +379,19 @@ public class GameManager: abagames.util.sdl.gamemanager.GameManager {
     } else if (bossTimer < BOSSTIMER_FREEZED) {
       bossTimer -= 17;
       if (bossTimer < 0) {
-	bullets.clearVisible();
-	bullets.clear();
-	ship.breakStuckEnemies();
-	bossTimer = 0;
-	bossDstCnt = 0;
-	Music.fadeMusic();
+        bullets.clearVisible();
+        bullets.clear();
+        ship.breakStuckEnemies();
+        bossTimer = 0;
+        bossDstCnt = 0;
+        Music.fadeMusic();
       }
     }
     if (pad.keys[SDLK_p] == SDL_PRESSED) {
       if (!pPrsd) {
-	pPrsd = true;
-	if (state == State.IN_GAME)
-	  startPause();
+        pPrsd = true;
+        if (state == State.IN_GAME)
+          startPause();
       }
     } else {
       pPrsd = false;
@@ -399,14 +399,14 @@ public class GameManager: abagames.util.sdl.gamemanager.GameManager {
     /*if (!nowait) {
       // Intentional slowdown when the total speed of bullets is over SLOWDOWN_START_BULLETS_SPEED
       if (BulletActor.totalBulletsSpeed > SLOWDOWN_START_BULLETS_SPEED) {
-	float sm = BulletActor.totalBulletsSpeed / SLOWDOWN_START_BULLETS_SPEED;
-	if (sm > 1.75)
-	  sm = 1.75;
-	interval += (sm * mainLoop.INTERVAL_BASE - interval) * 0.1;
-	mainLoop.interval = (int) interval;
+        float sm = BulletActor.totalBulletsSpeed / SLOWDOWN_START_BULLETS_SPEED;
+        if (sm > 1.75)
+          sm = 1.75;
+        interval += (sm * mainLoop.INTERVAL_BASE - interval) * 0.1;
+        mainLoop.interval = (int) interval;
       } else {
-	interval += (mainLoop.INTERVAL_BASE - interval) * 0.08;
-	mainLoop.interval = (int) interval;
+        interval += (mainLoop.INTERVAL_BASE - interval) * 0.08;
+        mainLoop.interval = (int) interval;
       }
       }*/
   }
@@ -423,32 +423,32 @@ public class GameManager: abagames.util.sdl.gamemanager.GameManager {
       isContinue = false;
     } else {
       if (pad.getButtonState() & (Pad.PAD_BUTTON1 | Pad.PAD_BUTTON2)) {
-	if (!btnPrsd)
-	  gotoNextState = true;
+        if (!btnPrsd)
+          gotoNextState = true;
       } else {
-	btnPrsd = false;
+        btnPrsd = false;
       }
       if (credit > 0) {
-	int key = (pad.getPadState() & (Pad.PAD_LEFT | Pad.PAD_RIGHT));
-	if (key != 0) {
-	  if (!arwPrsd) {
-	    arwPrsd = true;
-	    if ((key & Pad.PAD_LEFT) != 0)
-	      isContinue = true;
-	    if ((key & Pad.PAD_RIGHT) != 0)
-	      isContinue = false;
-	  }
-	} else {
-	  arwPrsd = false;
-	}
+        int key = (pad.getPadState() & (Pad.PAD_LEFT | Pad.PAD_RIGHT));
+        if (key != 0) {
+          if (!arwPrsd) {
+            arwPrsd = true;
+            if ((key & Pad.PAD_LEFT) != 0)
+              isContinue = true;
+            if ((key & Pad.PAD_RIGHT) != 0)
+              isContinue = false;
+          }
+        } else {
+          arwPrsd = false;
+        }
       }
     }
     if ((cnt > 64 && gotoNextState) || cnt > 700) {
       if (isContinue && cnt <= 700) {
-	credit--;
-	startInGame();
+        credit--;
+        startInGame();
       } else {
-	startTitle();
+        startTitle();
       }
     }
     field.move();
@@ -464,8 +464,8 @@ public class GameManager: abagames.util.sdl.gamemanager.GameManager {
     pauseCnt++;
     if (pad.keys[SDLK_p] == SDL_PRESSED) {
       if (!pPrsd) {
-	pPrsd = true;
-	resumePause();
+        pPrsd = true;
+        resumePause();
       }
     } else {
       pPrsd = false;
@@ -484,7 +484,7 @@ public class GameManager: abagames.util.sdl.gamemanager.GameManager {
     if (e.type == SDL_VIDEORESIZE) {
       SDL_ResizeEvent re = e.resize;
       if (re.w > 150 && re.h > 100)
-	screen.resized(re.w, re.h);
+        screen.resized(re.w, re.h);
     }
     screen.clear();
     screen.viewOrthoFixed();
@@ -610,14 +610,14 @@ public class GameManager: abagames.util.sdl.gamemanager.GameManager {
     if (credit > 0 && cnt > 64) {
       LetterRender.drawString("CONTINUE", 280, 400, 10, LetterRender.Direction.TO_RIGHT, 1);
       if (isContinue) {
-	LetterRender.drawString("YES", 480, 400, 12, LetterRender.Direction.TO_RIGHT, 0);
-	LetterRender.drawString("NO", 562, 402, 8, LetterRender.Direction.TO_RIGHT, 2);
+        LetterRender.drawString("YES", 480, 400, 12, LetterRender.Direction.TO_RIGHT, 0);
+        LetterRender.drawString("NO", 562, 402, 8, LetterRender.Direction.TO_RIGHT, 2);
       } else {
-	LetterRender.drawString("YES", 483, 402, 8, LetterRender.Direction.TO_RIGHT, 2);
-	LetterRender.drawString("NO", 560, 400, 12, LetterRender.Direction.TO_RIGHT, 0);
+        LetterRender.drawString("YES", 483, 402, 8, LetterRender.Direction.TO_RIGHT, 2);
+        LetterRender.drawString("NO", 560, 400, 12, LetterRender.Direction.TO_RIGHT, 0);
       }
-      LetterRender.drawString("CREDIT " ~ std.string.toString(credit), 32, 420, 8, 
-			      LetterRender.Direction.TO_RIGHT, 3);
+      LetterRender.drawString("CREDIT " ~ std.string.toString(credit), 32, 420, 8,
+                              LetterRender.Direction.TO_RIGHT, 3);
     }
   }
 

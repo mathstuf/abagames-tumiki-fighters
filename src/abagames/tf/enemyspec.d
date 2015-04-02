@@ -39,27 +39,27 @@ public class EnemySpec {
     for (;;) {
       char[] v = si.next;
       if (v == "e")
-	break;
+        break;
       float shield = atof(v);
       if (!bodyShieldSet) {
-	bodySpec.shield = shield;
-	bodyShieldSet = true;
+        bodySpec.shield = shield;
+        bodyShieldSet = true;
       }
       AttackForm af = new AttackForm(shield, ai);
       for (;;) {
-	v = si.next;
-	if (v == "e")
-	  break;
-	int attackPeriod = atoi(v);
-	int breakPeriod = atoi(si.next);
-	af.addPeriod(attackPeriod, breakPeriod);
-	ai++;
+        v = si.next;
+        if (v == "e")
+          break;
+        int attackPeriod = atoi(v);
+        int breakPeriod = atoi(si.next);
+        af.addPeriod(attackPeriod, breakPeriod);
+        ai++;
       }
       attackForm ~= af;
     }
     for (;;) {
       if (!si.hasNext)
-	break;
+        break;
       char[] fn = si.next;
       float x = atof(si.next);
       float y = atof(si.next);
@@ -73,13 +73,13 @@ public class EnemySpec {
     sizeXp = sizeYp = float.min;
     foreach (EnemyPartSpec eps; parts) {
       if (sizeXp < eps.ofs.x + eps.tumikiSet.sizeXp)
-	sizeXp = eps.ofs.x + eps.tumikiSet.sizeXp;
+        sizeXp = eps.ofs.x + eps.tumikiSet.sizeXp;
       if (sizeXm > eps.ofs.x + eps.tumikiSet.sizeXm)
-	sizeXm = eps.ofs.x + eps.tumikiSet.sizeXm;
+        sizeXm = eps.ofs.x + eps.tumikiSet.sizeXm;
       if (sizeYp < eps.ofs.y + eps.tumikiSet.sizeYp)
-	sizeYp = eps.ofs.y + eps.tumikiSet.sizeYp;
+        sizeYp = eps.ofs.y + eps.tumikiSet.sizeYp;
       if (sizeYm > eps.ofs.y + eps.tumikiSet.sizeYm)
-	sizeYm = eps.ofs.y + eps.tumikiSet.sizeYm;
+        sizeYm = eps.ofs.y + eps.tumikiSet.sizeYm;
     }
   }
 
@@ -120,7 +120,7 @@ public class EnemyPartSpec {
     this(fileName);
     ofs.x = x;
     ofs.y = y;
-  }  
+  }
 
   public this(char[] fileName, float x, float y, float s, int dfi, float dtm) {
     this(fileName, x, y);

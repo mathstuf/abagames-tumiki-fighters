@@ -114,7 +114,7 @@ public class StuckEnemy: Actor {
   private void removeTopBullets() {
     for (int i = 0 ; i < topBulletNum; i++)
       if (topBullet[i].actor)
-	topBullet[i].actor.removeForced();
+        topBullet[i].actor.removeForced();
   }
 
   public void remove() {
@@ -126,11 +126,11 @@ public class StuckEnemy: Actor {
     for (int i = 0 ; i < topBulletNum; i++) {
       EnemyTopBullet etb = topBullet[i];
       if (etb.actor) {
-	float stox = etb.tumiki.ofs.x * cos(deg) - etb.tumiki.ofs.y * sin(deg);
-	float stoy = etb.tumiki.ofs.x * sin(deg) + etb.tumiki.ofs.y * cos(deg);
-	etb.actor.bullet.pos.x = pos.x + stox;
-	etb.actor.bullet.pos.y = pos.y + stoy;
-	etb.actor.bullet.deg = deg - PI / 2;
+        float stox = etb.tumiki.ofs.x * cos(deg) - etb.tumiki.ofs.y * sin(deg);
+        float stoy = etb.tumiki.ofs.x * sin(deg) + etb.tumiki.ofs.y * cos(deg);
+        etb.actor.bullet.pos.x = pos.x + stox;
+        etb.actor.bullet.pos.y = pos.y + stoy;
+        etb.actor.bullet.deg = deg - PI / 2;
       }
     }
   }
@@ -166,10 +166,10 @@ public class StuckEnemy: Actor {
       md = SPLINTER_FLYIN_MOVE_DEG_MAX;
     else if (md < -SPLINTER_FLYIN_MOVE_DEG_MAX)
       md = -SPLINTER_FLYIN_MOVE_DEG_MAX;
-    sp.set(pos, 
-	   lofs.x * SPLINTER_FLYIN_RATIO_X,
-	   lofs.y * SPLINTER_FLYIN_RATIO_Y + SPLINTER_FLYIN_MOVE_Y,
-	   deg, md, tumikiSet, barragePtnIdx);
+    sp.set(pos,
+           lofs.x * SPLINTER_FLYIN_RATIO_X,
+           lofs.y * SPLINTER_FLYIN_RATIO_Y + SPLINTER_FLYIN_MOVE_Y,
+           deg, md, tumikiSet, barragePtnIdx);
   }
 
   static private const float COLLISION_RATIO = 0.8;
@@ -219,12 +219,12 @@ public class StuckEnemy: Actor {
     int sen = SoundManager.Se.STUCK_BONUS;
     if (manager.mode == GameManager.Mode.EXTRA)
       if (stuckEnemies.pullInRatio >= 1)
-	mp = 5;
+        mp = 5;
       else
-	sen = SoundManager.Se.STUCK_BONUS_PUSHIN;
+        sen = SoundManager.Se.STUCK_BONUS_PUSHIN;
     if (tumikiSet.fireScoreInterval > 0 &&
-	(cnt % tumikiSet.fireScoreInterval) == 0 &&
-	!field.checkHit(pos)) {
+        (cnt % tumikiSet.fireScoreInterval) == 0 &&
+        !field.checkHit(pos)) {
       manager.addScore(tumikiSet.fireScore * mp, pos);
       SoundManager.playSe(sen);
     }
@@ -232,11 +232,11 @@ public class StuckEnemy: Actor {
       stuckEnemies.totalSize += tumikiSet.size;
     } else {
       for (int i = 0; i < connectedEnemyNum; i++) {
-	if (!connectedEnemy[i].isExist) {
-	  connectedEnemyNum--;
-	  for (int j = i; j < connectedEnemyNum; j++)
-	    connectedEnemy[j] = connectedEnemy[j + 1];
-	}
+        if (!connectedEnemy[i].isExist) {
+          connectedEnemyNum--;
+          for (int j = i; j < connectedEnemyNum; j++)
+            connectedEnemy[j] = connectedEnemy[j + 1];
+        }
       }
     }
   }
@@ -244,17 +244,17 @@ public class StuckEnemy: Actor {
   public override void draw() {
     if (!isMyShip) {
       if (manager.mode == GameManager.Mode.EXTRA && stuckEnemies.pullInRatio < 1)
-	tumikiSet.drawShade(pos, 0.2, 1, deg, stuckEnemies.pullInRatio);
+        tumikiSet.drawShade(pos, 0.2, 1, deg, stuckEnemies.pullInRatio);
       else
-	tumikiSet.draw(pos, 0.2, deg);
-    }  
+        tumikiSet.draw(pos, 0.2, deg);
+    }
   }
 
   public bool checkHit(Vector pos) {
-    if (pos.checkSide(colDatums[0], colDatums[1]) * 
-	pos.checkSide(colDatums[3], colDatums[2]) < 0 &&
-	pos.checkSide(colDatums[1], colDatums[2]) * 
-	pos.checkSide(colDatums[0], colDatums[3]) < 0)
+    if (pos.checkSide(colDatums[0], colDatums[1]) *
+        pos.checkSide(colDatums[3], colDatums[2]) < 0 &&
+        pos.checkSide(colDatums[1], colDatums[2]) *
+        pos.checkSide(colDatums[0], colDatums[3]) < 0)
       return true;
     else
       return false;
@@ -280,21 +280,21 @@ public class StuckEnemy: Actor {
     isConnected = true;
     for (int i = 0; i < connectedEnemyNum; i++) {
       if (connectedEnemy[i].isExist)
-	if(!connectedEnemy[i].isConnected)
-	  connectedEnemy[i].scanConnected();
+        if(!connectedEnemy[i].isConnected)
+          connectedEnemy[i].scanConnected();
     }
   }
 
   private void activateTopBullets() {
     for (int i = 0 ; i < topBulletNum; i++)
       if (topBullet[i].actor)
-	topBullet[i].actor.bullet.deactivated = false;
+        topBullet[i].actor.bullet.deactivated = false;
   }
 
   private void deactivateTopBullets() {
     for (int i = 0 ; i < topBulletNum; i++)
       if (topBullet[i].actor)
-	topBullet[i].actor.bullet.deactivated = true;
+        topBullet[i].actor.bullet.deactivated = true;
   }
 }
 
@@ -308,7 +308,7 @@ public class StuckEnemyInitializer: ActorInitializer {
   GameManager manager;
 
   public this(Ship ship, Field field, BulletActorPool bullets, ActorPool fragments,
-	      SplinterPool splinters, GameManager manager) {
+              SplinterPool splinters, GameManager manager) {
     this.ship = ship;
     this.field = field;
     this.bullets = bullets;
@@ -351,9 +351,9 @@ public class StuckEnemyPool: ActorPool {
       return false;
     foreach (Actor ac; actor) {
       if (ac.isExist) {
-	StuckEnemy se = cast(StuckEnemy) ac;
-	if (se.checkHit(pos))
-	  return true;
+        StuckEnemy se = cast(StuckEnemy) ac;
+        if (se.checkHit(pos))
+          return true;
       }
     }
     return false;
@@ -364,9 +364,9 @@ public class StuckEnemyPool: ActorPool {
       return null;
     foreach (Actor ac; actor) {
       if (ac.isExist) {
-	StuckEnemy se = cast(StuckEnemy) ac;
-	if (!se.isMyShip && se.checkHit(pos))
-	  return se;
+        StuckEnemy se = cast(StuckEnemy) ac;
+        if (!se.isMyShip && se.checkHit(pos))
+          return se;
       }
     }
     return null;
@@ -375,11 +375,11 @@ public class StuckEnemyPool: ActorPool {
   public void removeAllEnemies() {
     foreach (Actor ac; actor) {
       if (ac.isExist) {
-	StuckEnemy se = cast(StuckEnemy) ac;
-	if (!se.isMyShip) {
-	  se.breakIntoFragments();
-	  se.remove();
-	}
+        StuckEnemy se = cast(StuckEnemy) ac;
+        if (!se.isMyShip) {
+          se.breakIntoFragments();
+          se.remove();
+        }
       }
     }
     initPullIn();
@@ -388,11 +388,11 @@ public class StuckEnemyPool: ActorPool {
   public void flyinAllEnemies() {
     foreach (Actor ac; actor) {
       if (ac.isExist) {
-	StuckEnemy se = cast(StuckEnemy) ac;
-	if (!se.isMyShip) {
-	  se.breakIntoSplinter();
-	  se.remove();
-	}
+        StuckEnemy se = cast(StuckEnemy) ac;
+        if (!se.isMyShip) {
+          se.breakIntoSplinter();
+          se.remove();
+        }
       }
     }
     initPullIn();
@@ -402,9 +402,9 @@ public class StuckEnemyPool: ActorPool {
     bool connected = false;
     foreach (Actor ac; actor) {
       if (ac.isExist) {
-	StuckEnemy se = cast(StuckEnemy) ac;
-	if (se.checkConnected(nse))
-	  connected = true;
+        StuckEnemy se = cast(StuckEnemy) ac;
+        if (se.checkConnected(nse))
+          connected = true;
       }
     }
     return connected;
@@ -416,11 +416,11 @@ public class StuckEnemyPool: ActorPool {
     scanConnected();
     foreach (Actor ac; actor) {
       if (ac.isExist) {
-	StuckEnemy se = cast(StuckEnemy) ac;
-	if (!se.isMyShip && !se.isConnected) {
-	  se.breakIntoFragments();
-	  se.remove();
-	}
+        StuckEnemy se = cast(StuckEnemy) ac;
+        if (!se.isMyShip && !se.isConnected) {
+          se.breakIntoFragments();
+          se.remove();
+        }
       }
     }
   }
@@ -429,10 +429,10 @@ public class StuckEnemyPool: ActorPool {
     StuckEnemy myShip;
     foreach (Actor ac; actor) {
       if (ac.isExist) {
-	StuckEnemy se = cast(StuckEnemy) ac;
-	if (se.isMyShip)
-	  myShip = se;
-	se.isConnected = false;
+        StuckEnemy se = cast(StuckEnemy) ac;
+        if (se.isMyShip)
+          myShip = se;
+        se.isConnected = false;
       }
     }
     myShip.scanConnected();
@@ -458,9 +458,9 @@ public class StuckEnemyPool: ActorPool {
     StuckEnemy myShip;
     foreach (Actor ac; actor) {
       if (ac.isExist) {
-	StuckEnemy se = cast(StuckEnemy) ac;
-	if (!se.isMyShip)
-	  se.activateTopBullets();
+        StuckEnemy se = cast(StuckEnemy) ac;
+        if (!se.isMyShip)
+          se.activateTopBullets();
       }
     }
   }
@@ -469,9 +469,9 @@ public class StuckEnemyPool: ActorPool {
     StuckEnemy myShip;
     foreach (Actor ac; actor) {
       if (ac.isExist) {
-	StuckEnemy se = cast(StuckEnemy) ac;
-	if (!se.isMyShip)
-	  se.deactivateTopBullets();
+        StuckEnemy se = cast(StuckEnemy) ac;
+        if (!se.isMyShip)
+          se.deactivateTopBullets();
       }
     }
   }
@@ -480,7 +480,7 @@ public class StuckEnemyPool: ActorPool {
     totalSize = 0;
     foreach (Actor ac; actor) {
       if (ac.isExist)
-	ac.move();
+        ac.move();
     }
     if (manager.mode == GameManager.Mode.EXTRA)
       manager.setRank(totalSize * 0.02);

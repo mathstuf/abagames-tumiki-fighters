@@ -42,12 +42,12 @@ public class AttractManager {
       btnPrsd = true;
     } else {
       if (pad.getButtonState() & Pad.PAD_BUTTON1) {
-	if (!btnPrsd) {
-	  gameManager.startInGameFirst();
-	  return;
-	}
+        if (!btnPrsd) {
+          gameManager.startInGameFirst();
+          return;
+        }
       } else {
-	btnPrsd = false;
+        btnPrsd = false;
       }
     }
   }
@@ -55,7 +55,7 @@ public class AttractManager {
   public void drawTitle() {
     if (cnt % 64 < 32)
       LetterRender.drawString
-	("PUSH SHOT BUTTON TO START", 250, 390, 7, LetterRender.Direction.TO_RIGHT, 3);
+        ("PUSH SHOT BUTTON TO START", 250, 390, 7, LetterRender.Direction.TO_RIGHT, 3);
     int c = cnt % 1200;
     if (c < 300) {
       drawTitleBoard(70, 50, 16);
@@ -63,42 +63,42 @@ public class AttractManager {
       drawTitleBoard(30, 360, 8);
       int dr = (c - 300) / 30;
       if (dr > PrefManager.RANKING_NUM)
-	dr = PrefManager.RANKING_NUM;
+        dr = PrefManager.RANKING_NUM;
       for (int i = 0; i < dr; i++) {
-	char[] rs = std.string.toString(i + 1);
-	float x = 100;
-	float y = i * 30 + 32;
-	switch (i) {
-	case 0:
-	  rs ~= "ST";
-	  break;
-	case 1:
-	  rs ~= "ND";
-	  break;
-	case 2:
-	  rs ~= "RD";
-	  break;
-	case 9:
-	  x -= 19;
-	default:
-	  rs ~= "TH";
-	  break;
-	}
-	LetterRender.drawString
-	  (rs, x, y, 9, LetterRender.Direction.TO_RIGHT, 3);
-	LetterRender.drawNum(prefManager.ranking[i].score, 400, y, 9, 
-			     LetterRender.Direction.TO_RIGHT, 3);
-	if (prefManager.ranking[i].stage >= StageManager.STAGE_NUM)
-	  rs = "A";
-	else
-	  rs = std.string.toString(prefManager.ranking[i].stage + 1);
-	LetterRender.drawString
-	  (rs, 500, y, 9, LetterRender.Direction.TO_RIGHT, 3);
+        char[] rs = std.string.toString(i + 1);
+        float x = 100;
+        float y = i * 30 + 32;
+        switch (i) {
+        case 0:
+          rs ~= "ST";
+          break;
+        case 1:
+          rs ~= "ND";
+          break;
+        case 2:
+          rs ~= "RD";
+          break;
+        case 9:
+          x -= 19;
+        default:
+          rs ~= "TH";
+          break;
+        }
+        LetterRender.drawString
+          (rs, x, y, 9, LetterRender.Direction.TO_RIGHT, 3);
+        LetterRender.drawNum(prefManager.ranking[i].score, 400, y, 9,
+                             LetterRender.Direction.TO_RIGHT, 3);
+        if (prefManager.ranking[i].stage >= StageManager.STAGE_NUM)
+          rs = "A";
+        else
+          rs = std.string.toString(prefManager.ranking[i].stage + 1);
+        LetterRender.drawString
+          (rs, 500, y, 9, LetterRender.Direction.TO_RIGHT, 3);
       }
     }
   }
 
-  private const int[][] TITLE_PTN = 
+  private const int[][] TITLE_PTN =
     [
      [-4,-1,-1,-1,-1,-1,-1,-1,-1,-0,-0,-0,-0,-0,],
      [-0,-1,19,20,12, 8,10, 8,-1,-0,-0,-0,-0,-0,],
@@ -126,20 +126,20 @@ public class AttractManager {
     foreach (int[] tpl; TITLE_PTN) {
       tx = 0;
       foreach (int tp; tpl) {
-	int c = TITLE_CLR[ty][tx];
-	glPushMatrix();
-	glTranslatef(tx * 2, ty * 2, 0);
-	if (tp < 0) {
-	  int ti = -tp - 1;
-	  glScalef(0.75, 0.75, 0.75);
-	  glCallList(Tumiki.displayListIdx + ti + c * Tumiki.SHAPE_NUM);
-	} else if (tp > 0) {
-	  int li = tp + 10;
-	  glScalef(0.9, 0.9, 0.9);
-	  glCallList(LetterRender.displayListIdx + li + c * LetterRender.LETTER_NUM);
-	}
-	glPopMatrix();
-	tx++;
+        int c = TITLE_CLR[ty][tx];
+        glPushMatrix();
+        glTranslatef(tx * 2, ty * 2, 0);
+        if (tp < 0) {
+          int ti = -tp - 1;
+          glScalef(0.75, 0.75, 0.75);
+          glCallList(Tumiki.displayListIdx + ti + c * Tumiki.SHAPE_NUM);
+        } else if (tp > 0) {
+          int li = tp + 10;
+          glScalef(0.9, 0.9, 0.9);
+          glCallList(LetterRender.displayListIdx + li + c * LetterRender.LETTER_NUM);
+        }
+        glPopMatrix();
+        tx++;
       }
       ty++;
     }
