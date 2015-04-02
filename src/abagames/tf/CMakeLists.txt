@@ -1,0 +1,45 @@
+set(tf_srcs
+    attractmanager.d
+    barragemanager.d
+    bulletactor.d
+    bulletactorpool.d
+    bulletinst.d
+    bullettarget.d
+    damagegauge.d
+    enemy.d
+    enemyspec.d
+    field.d
+    fragment.d
+    gamemanager.d
+    letterrender.d
+    mobileletter.d
+    morphbullet.d
+    particle.d
+    prefmanager.d
+    scoresign.d
+    screen.d
+    ship.d
+    soundmanager.d
+    splinter.d
+    stagemanager.d
+    stuckenemy.d
+    tumiki.d
+    tumikiset.d)
+
+add_library(tf STATIC
+    ${tf_srcs})
+target_link_libraries(tf
+    tf_util
+    tf_util_bulletml
+    tf_util_sdl
+    Derelict::opengl3
+    Derelict::sdl2
+    Derelict::util)
+
+add_executable(tumikifighters
+    boot.d)
+target_link_libraries(tumikifighters
+    tf
+    tf_util
+    tf_util_bulletml
+    tf_util_sdl)
