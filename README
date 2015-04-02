@@ -1,0 +1,6 @@
+A modernization of tumiki-fighters[1] so that it works with recent versions of
+its dependencies (OpenGL, SDL). Instead of the custom code originally used, the
+Derelict project is used instead. A new BulletML[2] library is also used.
+
+[1]http://www.asahi-net.or.jp/~cs8k-cyu/windows/tf_e.html
+[2]https://github.com/mathstuf/bulletml.git
