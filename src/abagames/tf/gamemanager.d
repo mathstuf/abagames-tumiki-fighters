@@ -10,6 +10,7 @@ private import std.math;
 private import derelict.opengl3.gl;
 private import derelict.sdl2.sdl;
 private import bml = bulletml.bulletml;
+private import abagames.util.bulletml.bullet;
 private import abagames.util.rand;
 private import abagames.util.actorpool;
 private import abagames.util.vector;
@@ -36,6 +37,7 @@ private import abagames.tf.scoresign;
 private import abagames.tf.damagegauge;
 private import abagames.tf.mobileletter;
 private import abagames.tf.attractmanager;
+private import abagames.tf.tumikiset;
 
 /**
  * Manage the game status and actor pools.
@@ -94,6 +96,16 @@ public class GameManager: abagames.util.sdl.gamemanager.GameManager {
 
   // Initialize actor pools, load BGMs/SEfs and textures.
   public void init() {
+    Bullet.init();
+
+    Fragment.init();
+    MobileLetter.init();
+    Particle.init();
+    Ship.init();
+    Splinter.init();
+    StagePattern.init();
+    TumikiSet.init();
+
     BarrageManager.loadBulletMLs();
     pad = cast(Pad) input;
     try {

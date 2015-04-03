@@ -31,7 +31,7 @@ public class MobileLetter: Actor {
   float size;
   int cnt;
 
-  public static this() {
+  public static init() {
     rand = new Rand;
   }
 

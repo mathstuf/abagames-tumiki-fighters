@@ -40,7 +40,7 @@ public class Splinter: Actor {
   bool isBoss;
   bool flyin;
 
-  public static this() {
+  public static init() {
     rand = new Rand;
   }
 

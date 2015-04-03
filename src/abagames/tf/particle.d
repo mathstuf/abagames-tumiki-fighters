@@ -30,7 +30,7 @@ public class Particle: Actor {
   int type;
   int cnt;
 
-  public static this() {
+  public static init() {
     rand = new Rand;
   }
 

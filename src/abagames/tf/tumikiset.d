@@ -45,7 +45,7 @@ public class TumikiSet {
   static string[] BULLET_COLOR_STR =
     ["r", "a", "p"];
 
-  public static this() {
+  public static init() {
     int i = 0;
     foreach (string s; SHAPE_STR) {
       shapeStr[s] = i;

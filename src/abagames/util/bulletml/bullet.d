@@ -29,7 +29,7 @@ public class Bullet: bml.BulletManager {
   bml.BulletMLRunner runner;
   float rankNum;
 
-  public static this() {
+  public static init() {
     randSource = new Rand;
   }
 

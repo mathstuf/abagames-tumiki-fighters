@@ -70,7 +70,7 @@ public class Ship: BulletTarget {
   bool btnPrsd;
   bool pullIn;
 
-  public static this() {
+  public static init() {
     rand = new Rand;
   }
 

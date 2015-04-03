@@ -176,7 +176,7 @@ public class StagePattern {
   static const string STAGE_DIR_NAME = "stage";
   static int[string] posTypeStr;
 
-  public static this() {
+  public static init() {
     posTypeStr["f"] = 0;
     posTypeStr["u"] = 1;
   }
